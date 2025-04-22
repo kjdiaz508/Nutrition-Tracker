@@ -31,6 +31,77 @@ a {
   color: var(--color-link);
 }
 
-h1, h2 {
+h1,
+h2 {
   color: var(--color-accent);
+}
+
+/* layout.css */
+
+/* Contain site width */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+/* Layout header content */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Generic grid system */
+.main-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-md);
+}
+
+.col-span-12 {
+  grid-column: span 12;
+}
+.col-span-8 {
+  grid-column: span 8;
+}
+.col-span-6 {
+  grid-column: span 6;
+}
+.col-span-4 {
+  grid-column: span 4;
+}
+.col-span-3 {
+  grid-column: span 3;
+}
+
+/* Card styling */
+.card {
+  background-color: white;
+  padding: var(--space-md);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Sequences like recipe lists or meal days */
+.sequence {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Responsive breakpoint for smaller screens */
+@media (max-width: 768px) {
+  .main-grid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  .col-span-6 {
+    grid-column: span 8;
+  }
+  .col-span-4 {
+    grid-column: span 8;
+  }
+  .col-span-3 {
+    grid-column: span 8;
+  }
 }
