@@ -1,29 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="/styles/tokens.css">
-  <link rel="stylesheet" href="/styles/page.css">
-  <title>User Profile</title>
-</head>
-<body>
-  <header>
-    <h1>Jane Doe</h1>
-    <nav><a href="index.html">← Back to Home</a></nav>
-  </header>
-  <main>
-    <section>
-      <h2>My Recipes</h2>
-      <ul>
-        <li><a href="recipe-chili.html">Spicy Bean Chili</a></li>
-      </ul>
-    </section>
-    <section>
-      <h2>My Meal Plans</h2>
-      <ul>
-        <li><a href="meal-plan.html">Weekly High Protein Plan</a></li>
-      </ul>
-    </section>
-  </main>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="/styles/tokens.css" />
+    <link rel="stylesheet" href="/styles/page.css" />
+    <title>User Profile</title>
+  </head>
+  <body>
+    <header>
+      <h1>Jane Doe</h1>
+      <nav><a href="index.html">← Back to Home</a></nav>
+    </header>
+    <main>
+      <section>
+        <h2>My Recipes</h2>
+        <ul>
+          <li>
+            <a href="recipe-chili.html">
+              <svg class="icon">
+                <use href="/icons/nutrition.svg#icon-recipe-checklist" />
+              </svg>
+              Spicy Bean Chili
+            </a>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>My Meal Plans</h2>
+        <ul>
+          <li>
+            <a href="meal-plan.html">
+              <svg class="icon">
+                <use href="/icons/nutrition.svg#icon-meal-plan" />
+              </svg>
+              Weekly High Protein Plan
+            </a>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
 </html>

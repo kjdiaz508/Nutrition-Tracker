@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 :root {
     --color-background-page: #f7f5f0;
     --color-background-header: #3a3f58;
@@ -6,10 +7,11 @@
     --color-accent: #dd6b20;
     --color-link: var(--color-accent);
   
-    --font-family-base: 'Segoe UI', sans-serif;
+    --font-family-base: "Roboto", sans-serif;
+    --font-family-heading: "Roboto Slab", serif;
   
     --space-sm: 8px;
     --space-md: 16px;
     --space-lg: 32px;
-  }
+}
   
