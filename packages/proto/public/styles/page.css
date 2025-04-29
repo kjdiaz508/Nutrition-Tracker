@@ -1,34 +1,13 @@
+/* Base Styles */
 body {
   background-color: var(--color-background-page);
   color: var(--color-text);
   font-family: var(--font-family-base);
 }
 
-svg.icon-no-fill {
-  display: inline;
-  height: 2em;
-  width: 2em;
-  vertical-align: top;
-}
-
-svg.icon {
-  display: inline;
-  height: 2em;
-  width: 2em;
-  vertical-align: top;
-  fill: currentColor;
-}
-
-header {
-  background-color: var(--color-background-header);
-  color: var(--color-text-inverted);
-  padding: 1rem;
-  border-bottom: 2px solid var(--color-accent);
-  font-family: var(--font-family-heading);
-}
-
 a {
   color: var(--color-link);
+  text-decoration: none;
 }
 
 h1,
@@ -36,23 +15,38 @@ h2 {
   color: var(--color-accent);
 }
 
-/* layout.css */
+/* Icons */
+svg.icon,
+svg.icon-no-fill {
+  display: inline;
+  height: 2em;
+  width: 2em;
+  vertical-align: top;
+}
+svg.icon {
+  fill: currentColor;
+}
 
-/* Contain site width */
+/* Header */
+header {
+  background-color: var(--color-background-header);
+  color: var(--color-text-inverted);
+  padding: 1rem;
+  border-bottom: 2px solid var(--color-accent);
+  font-family: var(--font-family-heading);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Layout */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--space-md);
 }
 
-/* Layout header content */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Generic grid system */
 .main-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -75,7 +69,7 @@ header {
   grid-column: span 3;
 }
 
-/* Card styling */
+/* Cards */
 .card {
   background-color: white;
   padding: var(--space-md);
@@ -83,25 +77,98 @@ header {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Sequences like recipe lists or meal days */
+.card h2 {
+  margin-bottom: var(--space-sm);
+}
+.card ul,
+.card p,
+.card ol {
+  margin-bottom: var(--space-sm);
+}
+
+/* Sequences */
+.row-sequence {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
 .sequence {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
 }
 
-/* Responsive breakpoint for smaller screens */
+/* Section Utility */
+.section {
+  margin-top: var(--space-lg);
+}
+.section h2 {
+  margin-bottom: var(--space-sm);
+}
+
+/* Button-style Links */
+.button-link {
+  display: inline-block;
+  background-color: var(--color-accent);
+  color: white;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+.button-link:hover {
+  background-color: #c75c1d;
+}
+
+/* Nav Layout */
+nav {
+  width: 100%;
+}
+
+/* Accessibility */
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Responsive Grid */
 @media (max-width: 768px) {
   .main-grid {
     grid-template-columns: repeat(8, 1fr);
   }
-  .col-span-6 {
-    grid-column: span 8;
-  }
-  .col-span-4 {
-    grid-column: span 8;
-  }
+  .col-span-6,
+  .col-span-4,
   .col-span-3 {
     grid-column: span 8;
   }
+}
+
+.ingredient-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: var(--space-lg) var(--space-md);
+}
+
+.ingredient-card {
+  max-width: 480px;
+  width: 100%;
+}
+
+.ingredient-card h1 {
+  margin-bottom: var(--space-md);
+}
+
+.ingredient-card nav {
+  margin-bottom: var(--space-md);
+  display: flex;
+  justify-content: flex-start;
 }

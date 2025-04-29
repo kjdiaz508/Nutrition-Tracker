@@ -1,38 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="styles/reset.css">
-  <link rel="stylesheet" href="/styles/tokens.css">
-  <link rel="stylesheet" href="/styles/page.css">
-  <title>Spicy Bean Chili</title>
-</head>
-<body>
-  <header>
-    <h1>Spicy Bean Chili</h1>
-    <nav><a href="shared-recipes.html">← Back to Shared Recipes</a></nav>
-  </header>
-  <main>
-    <section>
-      <h2>Ingredients</h2>
-      <ul>
-        <li><a href="ingredient-chicken.html">Chicken Breast</a> - 200g</li>
-        <li>Kidney Beans - 1 cup</li>
-        <li>Diced Tomatoes - 1/2 cup</li>
-      </ul>
-    </section>
-    <section>
-      <h2>Nutrition Summary</h2>
-      <p>Calories: 450 | Protein: 38g | Carbs: 35g | Fat: 9g</p>
-    </section>
-    <section>
-      <h2>Instructions</h2>
-      <ol>
-        <li>Cook chicken and beans.</li>
-        <li>Add tomatoes and simmer.</li>
-        <li>Season and serve hot.</li>
-      </ol>
-    </section>
-  </main>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Spicy Bean Chili</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/tokens.css" />
+    <link rel="stylesheet" href="styles/page.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Spicy Bean Chili</h1>
+        <nav>
+          <a href="shared-recipes.html" class="button-link">
+            <svg class="icon">
+              <use href="/icons/nutrition.svg#icon-cookbook" />
+            </svg>
+            ← Back to Shared Recipes
+          </a>
+        </nav>
+      </header>
+
+      <main class="main-grid section">
+        <section class="col-span-6 card">
+          <h2>Ingredients</h2>
+          <ul class="sequence">
+            <li><a href="ingredient-chicken.html">Chicken Breast</a> – 200g</li>
+            <li>Kidney Beans – 1 cup</li>
+            <li>Diced Tomatoes – 1/2 cup</li>
+          </ul>
+        </section>
+
+        <section class="col-span-6 card">
+          <h2>Nutrition Summary</h2>
+          <p>Calories: 450 | Protein: 38g | Carbs: 35g | Fat: 9g</p>
+        </section>
+
+        <section class="col-span-12 card section">
+          <h2>Instructions</h2>
+          <ol class="sequence">
+            <li>Cook chicken and beans.</li>
+            <li>Add tomatoes and simmer.</li>
+            <li>Season and serve hot.</li>
+          </ol>
+        </section>
+      </main>
+    </div>
+  </body>
 </html>

@@ -2,27 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="/styles/tokens.css" />
-    <link rel="stylesheet" href="/styles/page.css" />
     <title>Shared Meal Plans</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/tokens.css" />
+    <link rel="stylesheet" href="styles/page.css" />
   </head>
   <body>
-    <header>
-      <h1>Public Meal Plan Library</h1>
-      <nav><a href="index.html">← Back to Home</a></nav>
-    </header>
-    <main>
-      <ul>
-        <li>
-          <a href="meal-plan.html">
+    <div class="container">
+      <header>
+        <h1>Public Meal Plan Library</h1>
+        <nav>
+          <a href="index.html" class="button-link">
             <svg class="icon">
-              <use href="/icons/nutrition.svg#icon-meal-plan" />
+              <use href="/icons/nutrition.svg#icon-profile" />
             </svg>
-            Weekly High Protein Plan
+            ← Back to Home
           </a>
-        </li>
-      </ul>
-    </main>
+        </nav>
+      </header>
+
+      <main class="main-grid section">
+        <section class="col-span-12 card">
+          <ul class="sequence">
+            <li>
+              <a href="meal-plan.html">
+                <svg class="icon">
+                  <use href="/icons/nutrition.svg#icon-meal-plan" />
+                </svg>
+                Weekly High Protein Plan
+              </a>
+            </li>
+          </ul>
+        </section>
+      </main>
+    </div>
   </body>
 </html>
