@@ -10,7 +10,13 @@
   <body>
     <div class="container">
       <header>
-        <h1>Meal Prep & Nutrition Organizer</h1>
+        <div class="row-sequence">
+          <h1>Meal Prep & Nutrition Organizer</h1>
+          <label id="themeToggle" class="" style="gap:0.25rem;">
+            <input type="checkbox" autocomplete="off" aria-label="dark mode" />
+            Dark mode
+          </label>
+        </div>  
         <nav>
           <ul class="row-sequence">
             <li>
@@ -40,7 +46,6 @@
           </ul>
         </nav>
       </header>
-
       <main class="main-grid section">
         <section class="col-span-12 card">
           <h2>Welcome!</h2>
@@ -51,5 +56,6 @@
         </section>
       </main>
     </div>
+    <script type="module" src="scripts/theme-toggle.js"></script>
   </body>
 </html>
