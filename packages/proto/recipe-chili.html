@@ -22,13 +22,12 @@
       </header>
 
       <main class="main-grid section">
-        <section class="col-span-6 card">
-          <h2>Ingredients</h2>
-          <ul class="sequence">
+        <section class="col-span-6">
+          <mpn-ingredients-list>
             <li><a href="ingredient-chicken.html">Chicken Breast</a> – 200g</li>
             <li>Kidney Beans – 1 cup</li>
             <li>Diced Tomatoes – 1/2 cup</li>
-          </ul>
+          </mpn-ingredients-list>
         </section>
 
         <section class="col-span-6 card">
@@ -46,5 +45,13 @@
         </section>
       </main>
     </div>
+    <script type="module">
+      import { define } from "@calpoly/mustang";
+      import { IngredientsListElement } from "/src/IngredientsList.js";
+    
+      define({
+        "mpn-ingredients-list": IngredientsListElement
+      });
+    </script>
   </body>
 </html>
