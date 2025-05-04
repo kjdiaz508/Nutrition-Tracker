@@ -10,9 +10,9 @@ a {
   text-decoration: none;
 }
 
-h1,
-h2 {
+h1, h2, h3, h4, h5 {
   color: var(--color-accent);
+  font-family: var(--font-family-heading);
 }
 
 /* Icons */
@@ -147,7 +147,9 @@ nav {
   }
   .col-span-6,
   .col-span-4,
-  .col-span-3 {
+  .col-span-3,
+  .col-span-8,
+  .col-span-12 {
     grid-column: span 8;
   }
 }
