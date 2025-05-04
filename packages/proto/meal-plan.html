@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Meal Plan: High Protein Week</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/tokens.css" />
+    <link rel="stylesheet" href="styles/page.css" />
+  </head>
+  <body>
+    <script type="module">
+      import { define } from "@calpoly/mustang";
+      import { MealDayElement } from "/src/MealDay.js";
+      import { RecipeLinkElement } from "/src/RecipeLink.js";
+
+      define({
+        "mpn-meal-day": MealDayElement,
+        "mpn-recipe-link": RecipeLinkElement,
+      });
+    </script>
+    <div class="container">
+      <header>
+        <h1>High Protein Meal Plan</h1>
+        <nav>
+          <a href="shared-plans.html" class="button-link">
+            <svg class="icon">
+              <use href="/icons/nutrition.svg#icon-meal-plan" />
+            </svg>
+            ← Back to Shared Meal Plans
+          </a>
+        </nav>
+      </header>
+
+      <main class="main-grid section">
+        <section class="col-span-12">
+          <mpn-meal-day
+            day="Monday"
+            calories="1850"
+            protein="135g"
+            carbs="150g"
+            fat="45g"
+          >
+            <mpn-recipe-link
+              href="recipe-chili.html"
+              title="Spicy Bean Chili"
+            ></mpn-recipe-link>
+            <mpn-recipe-link
+              href="recipe-stirfry.html"
+              title="Chicken Veggie Stir Fry"
+            ></mpn-recipe-link>
+          </mpn-meal-day>
+          <mpn-meal-day
+            day="Tuesday"
+            calories="1850"
+            protein="135g"
+            carbs="150g"
+            fat="45g"
+          >
+            <mpn-recipe-link
+              href="recipe-chili.html"
+              title="Spicy Bean Chili"
+            ></mpn-recipe-link>
+            <mpn-recipe-link
+              href="recipe-stirfry.html"
+              title="Chicken Veggie Stir Fry"
+            ></mpn-recipe-link>
+          </mpn-meal-day>
+          <mpn-meal-day
+            day="Wednesday"
+            calories="1850"
+            protein="135g"
+            carbs="150g"
+            fat="45g"
+          >
+            <mpn-recipe-link
+              href="recipe-chili.html"
+              title="Spicy Bean Chili"
+            ></mpn-recipe-link>
+            <mpn-recipe-link
+              href="recipe-stirfry.html"
+              title="Chicken Veggie Stir Fry"
+            ></mpn-recipe-link>
+          </mpn-meal-day>
+        </section>
+
+        <section class="col-span-12 card section">
+          <a href="shopping-list.html" class="button-link">
+            <svg class="icon">
+              <use href="/icons/nutrition.svg#icon-grocery-bag" />
+            </svg>
+            View Shopping List
+          </a>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
