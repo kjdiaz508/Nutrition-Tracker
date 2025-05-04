@@ -36,7 +36,6 @@ export class MealDayElement extends LitElement {
         background-color: var(--color-background-card);
         border-radius: 8px;
         padding: var(--space-md);
-        margin: 1rem;
       }
 
       h2 {
