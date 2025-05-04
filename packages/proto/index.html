@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Meal Prep & Nutrition Organizer</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/tokens.css" />
+    <link rel="stylesheet" href="styles/page.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="row-sequence">
+          <h1>Meal Prep & Nutrition Organizer</h1>
+          <label id="themeToggle" class="" style="gap:0.25rem;">
+            <input type="checkbox" autocomplete="off" aria-label="dark mode" />
+            Dark mode
+          </label>
+        </div>  
+        <nav>
+          <ul class="row-sequence">
+            <li>
+              <a href="user.html" class="button-link">
+                <svg class="icon">
+                  <use href="/icons/nutrition.svg#icon-profile" />
+                </svg>
+                My Profile
+              </a>
+            </li>
+            <li>
+              <a href="shared-recipes.html" class="button-link">
+                <svg class="icon">
+                  <use href="/icons/nutrition.svg#icon-cookbook" />
+                </svg>
+                Browse Shared Recipes
+              </a>
+            </li>
+            <li>
+              <a href="shared-plans.html" class="button-link">
+                <svg class="icon">
+                  <use href="/icons/nutrition.svg#icon-meal-plan" />
+                </svg>
+                Browse Shared Meal Plans
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <main class="main-grid section">
+        <section class="col-span-12 card">
+          <h2>Welcome!</h2>
+          <p>
+            Use this app to explore meal plans, view detailed nutrition info,
+            and prep your week efficiently.
+          </p>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="scripts/theme-toggle.js"></script>
+  </body>
+</html>
