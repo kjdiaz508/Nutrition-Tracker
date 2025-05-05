@@ -1,0 +1,12 @@
+{
+  "id": "user123",
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "settings": {
+    "darkMode": true,
+    "preferredUnits": "metric"
+  },
+  "currentMealPlan": "high-protein-week",
+  "privateMealPlans": [],
+  "publicMealPlans": ["high-protein-week"]
+}
