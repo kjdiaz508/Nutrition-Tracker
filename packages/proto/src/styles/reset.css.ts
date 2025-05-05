@@ -17,6 +17,17 @@ const styles = css`
     list-style: none;
     padding: 0;
   }
+  
+  svg.icon,
+  svg.icon-no-fill {
+    display: inline;
+    height: 2em;
+    width: 2em;
+    vertical-align: top;
+  }
+  svg.icon {
+    fill: currentColor;
+  }
 `;
 
 export default { styles };
