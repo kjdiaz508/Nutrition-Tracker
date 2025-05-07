@@ -37,10 +37,12 @@ export class MealPlanElement extends LitElement {
   }
 
   async hydrate(src: string) {
-    const res = await fetch(src);
-    if (res.ok) {
-      this.mealPlan = await res.json();
-    }
+    fetch(src)
+    .then(res => res.json())
+    .then(data => {
+      this.mealPlan = data;
+    })
+    .catch(err => console.error("Error fetching meal plan:", err));
   }
 
   render() {

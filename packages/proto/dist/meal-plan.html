@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Meal Plan: High Protein Week</title>
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/tokens.css" />
+    <link rel="stylesheet" href="/styles/page.css" />
+    <script type="module" crossorigin src="/assets/mealPlan-De4OdR8f.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="modulepreload" crossorigin href="/assets/reset.css-CWSYUagB.js">
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>High Protein Meal Plan</h1>
+        <nav>
+          <a href="shared-plans.html" class="button-link">
+            <svg class="icon">
+              <use href="/icons/nutrition.svg#icon-meal-plan" />
+            </svg>
+            ← Back to Shared Meal Plans
+          </a>
+        </nav>
+      </header>
+
+      <main class="main-grid section">
+        
+        <mpn-meal-plan src="/data/mealplan.json"></mpn-meal-plan>
+
+        <section class="col-span-12 card section">
+          <a href="shopping-list.html" class="button-link">
+            <svg class="icon">
+              <use href="/icons/nutrition.svg#icon-grocery-bag" />
+            </svg>
+            View Shopping List
+          </a>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
