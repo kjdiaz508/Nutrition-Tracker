@@ -49,7 +49,7 @@ export class MealPlanElement extends LitElement {
     if (!this.mealPlan) return html`<p>Loading meal plan...</p>`;
 
     return html`
-      <section class="col-span-12 sequence">
+      <section>
         ${this.mealPlan.days.map(
           (day) => html`
             <mpn-meal-day
