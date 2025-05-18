@@ -34,6 +34,6 @@ export class IngredientsListElement extends LitElement {
         flex-direction: column;
         gap: var(--space-sm);
       }
-    `
+    `,
   ];
 }
