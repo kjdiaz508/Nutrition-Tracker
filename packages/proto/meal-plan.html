@@ -13,29 +13,29 @@
       import { MealDayElement } from "/src/MealDay.ts";
       import { RecipeLinkElement } from "/src/RecipeLink.ts";
       import { MealPlanElement } from "/src/MealPlan.ts";
+      import { PageHeaderElement } from "/src/PageHeader.ts";
 
       define({
         "mpn-meal-day": MealDayElement,
         "mpn-recipe-link": RecipeLinkElement,
-        "mpn-meal-plan": MealPlanElement
+        "mpn-meal-plan": MealPlanElement,
+        "mpn-page-header": PageHeaderElement
       });
     </script>
     <div class="container">
-      <header>
-        <h1>High Protein Meal Plan</h1>
-        <nav>
-          <a href="shared-plans.html" class="button-link">
-            <svg class="icon">
-              <use href="/icons/nutrition.svg#icon-meal-plan" />
-            </svg>
-            ← Back to Shared Meal Plans
-          </a>
-        </nav>
-      </header>
+      <mpn-page-header
+        title="High Protein Meal Plan"
+        href="shared-plans.html"
+        icon="icon-meal-plan"
+        label="← Back to Shared Meal Plans"
+      >
+      </mpn-page-header>
 
       <main class="main-grid section">
-        
-        <mpn-meal-plan src="/data/mealplan.json" class="col-span-12"></mpn-meal-plan>
+        <mpn-meal-plan
+          src="/data/mealplans/682959f0caa3b6dde83a8454.json"
+          class="col-span-12"
+        ></mpn-meal-plan>
 
         <section class="col-span-12 card section">
           <a href="shopping-list.html" class="button-link">

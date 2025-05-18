@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Chicken Veggie Stir Fry</title>
+    <title>Shopping List</title>
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
@@ -11,26 +11,25 @@
     <script type="module">
       import { define } from "@calpoly/mustang";
       import { PageHeaderElement } from "/src/PageHeader.ts";
-      import { IngredientsListElement } from "/src/IngredientsList.ts";
-      import { RecipeDetailsElement } from "/src/RecipeDetails.ts";
+      import { ShoppingListElement } from "/src/ShoppingList.ts";
+
       define({
         "mpn-page-header": PageHeaderElement,
-        "mpn-recipe-details": RecipeDetailsElement,
-        "mpn-ingredients-list": IngredientsListElement,
+        "mpn-shopping-list": ShoppingListElement
       });
     </script>
     <div class="container">
       <mpn-page-header
-        title="Chicken Veggie Stir Fry"
-        href="shared-recipes.html"
-        icon="icon-cookbook"
-        label="← Back to Shared Recipes"
+        title="Shopping List"
+        href="meal-plan.html"
+        icon="icon-meal-plan"
+        label="← Back to Meal Plan"
       >
       </mpn-page-header>
 
-      <mpn-recipe-details
-        src="/data/recipes/682958cecaa3b6dde83a844b.json"
-      ></mpn-recipe-details>
+      <main class="main-grid section">
+        <mpn-shopping-list class="col-span-12" src="/data/mealplans/682959f0caa3b6dde83a8454.json"></mpn-shopping-list>
+      </main>
     </div>
   </body>
 </html>

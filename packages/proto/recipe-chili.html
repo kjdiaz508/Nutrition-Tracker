@@ -8,50 +8,29 @@
     <link rel="stylesheet" href="/styles/page.css" />
   </head>
   <body>
-    <div class="container">
-      <header>
-        <h1>Spicy Bean Chili</h1>
-        <nav>
-          <a href="shared-recipes.html" class="button-link">
-            <svg class="icon">
-              <use href="/icons/nutrition.svg#icon-cookbook" />
-            </svg>
-            ← Back to Shared Recipes
-          </a>
-        </nav>
-      </header>
-
-      <main class="main-grid section">
-        <section class="col-span-6">
-          <mpn-ingredients-list>
-            <li><a href="ingredient-chicken.html">Chicken Breast</a> – 200g</li>
-            <li>Kidney Beans – 1 cup</li>
-            <li>Diced Tomatoes – 1/2 cup</li>
-          </mpn-ingredients-list>
-        </section>
-
-        <section class="col-span-6 card">
-          <h2>Nutrition Summary</h2>
-          <p>Calories: 450 | Protein: 38g | Carbs: 35g | Fat: 9g</p>
-        </section>
-
-        <section class="col-span-12 card section">
-          <h2>Instructions</h2>
-          <ol class="sequence">
-            <li>Cook chicken and beans.</li>
-            <li>Add tomatoes and simmer.</li>
-            <li>Season and serve hot.</li>
-          </ol>
-        </section>
-      </main>
-    </div>
     <script type="module">
       import { define } from "@calpoly/mustang";
+      import { PageHeaderElement } from "/src/PageHeader.ts";
       import { IngredientsListElement } from "/src/IngredientsList.ts";
-    
+      import { RecipeDetailsElement } from "/src/RecipeDetails.ts";
       define({
+        "mpn-page-header": PageHeaderElement,
+        "mpn-recipe-details": RecipeDetailsElement,
         "mpn-ingredients-list": IngredientsListElement
       });
     </script>
+    <div class="container">
+      <mpn-page-header
+        title="Spicy Bean Chili"
+        href="shared-recipes.html"
+        icon="icon-cookbook"
+        label="← Back to Shared Recipes"
+      >
+      </mpn-page-header>
+
+      <mpn-recipe-details
+        src="/data/recipes/68295834caa3b6dde83a8449.json"
+      ></mpn-recipe-details>
+    </div>
   </body>
 </html>

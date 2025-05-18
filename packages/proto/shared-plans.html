@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shared Meal Plans</title>
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/tokens.css" />
+    <link rel="stylesheet" href="/styles/page.css" />
+  </head>
+  <body>
+    <script type="module">
+      import { define } from "@calpoly/mustang";
+      import { MealPlanCardElement } from "/src/MealPlanCard.ts";
+      import { PageHeaderElement } from "/src/PageHeader.ts";
+      define({
+        "mpn-mealplan-card": MealPlanCardElement,
+        "mpn-page-header": PageHeaderElement,
+      });
+    </script>
+    <div class="container">
+      <mpn-page-header
+        title="Public Meal Plan Library"
+        href="index.html"
+        icon="icon-profile"
+        label="← Back to Home"
+      >
+      </mpn-page-header>
+
+      <main class="main-grid section">
+        <section class="col-span-12">
+          <ul class="sequence card">
+            <li>
+              <mpn-mealplan-card
+                title="Weekly High Protein Plan"
+                href="meal-plan.html"
+              ></mpn-mealplan-card>
+            </li>
+            <li>
+              <mpn-mealplan-card
+                title="Weekly High Protein Plan"
+                href="meal-plan.html"
+              ></mpn-mealplan-card>
+            </li>
+            <li>
+              <mpn-mealplan-card
+                title="Weekly High Protein Plan"
+                href="meal-plan.html"
+              ></mpn-mealplan-card>
+            </li>
+          </ul>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
