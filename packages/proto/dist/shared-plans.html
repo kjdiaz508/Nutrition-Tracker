@@ -6,31 +6,48 @@
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
+    <link rel="stylesheet" href="/styles/background.css"/>
+    <script type="module" crossorigin src="/assets/sharedPlans-f1VrYpvf.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="modulepreload" crossorigin href="/assets/PageHeader-Bjb32J5Z.js">
+    <link rel="modulepreload" crossorigin href="/assets/MealPlanCard-BS6kjh6A.js">
   </head>
-  <body>
+  <body>
+    <div>
+      <div class="grid-lines-container">
+        <div class="grid-lines"></div>
+      </div>
+      <div class="vignette"></div>
+    </div>
     <div class="container">
-      <header>
-        <h1>Public Meal Plan Library</h1>
-        <nav>
-          <a href="index.html" class="button-link">
-            <svg class="icon">
-              <use href="/icons/nutrition.svg#icon-profile" />
-            </svg>
-            ← Back to Home
-          </a>
-        </nav>
-      </header>
+      <mpn-page-header
+        title="Public Meal Plan Library"
+        href="index.html"
+        icon="icon-profile"
+        label="← Back to Home"
+      >
+      </mpn-page-header>
 
       <main class="main-grid section">
-        <section class="col-span-12 card">
-          <ul class="sequence">
+        <section class="col-span-12">
+          <ul class="sequence card">
             <li>
-              <a href="meal-plan.html">
-                <svg class="icon">
-                  <use href="/icons/nutrition.svg#icon-meal-plan" />
-                </svg>
-                Weekly High Protein Plan
-              </a>
+              <mpn-mealplan-card
+                title="Weekly High Protein Plan"
+                href="meal-plan.html"
+              ></mpn-mealplan-card>
+            </li>
+            <li>
+              <mpn-mealplan-card
+                title="Weekly High Protein Plan"
+                href="meal-plan.html"
+              ></mpn-mealplan-card>
+            </li>
+            <li>
+              <mpn-mealplan-card
+                title="Weekly High Protein Plan"
+                href="meal-plan.html"
+              ></mpn-mealplan-card>
             </li>
           </ul>
         </section>

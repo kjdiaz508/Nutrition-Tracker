@@ -28,6 +28,21 @@ const styles = css`
   svg.icon {
     fill: currentColor;
   }
+  
+  .card {
+  background-color: var(--color-background-card);
+  padding: var(--space-md);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  margin-bottom: var(--space-sm);
+}
+.card ul,
+.card p,
+.card ol {
+  margin-bottom: var(--space-sm);
 `;
 
 export default { styles };

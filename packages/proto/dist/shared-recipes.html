@@ -6,39 +6,42 @@
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
+    <link rel="stylesheet" href="/styles/background.css"/>
+    <script type="module" crossorigin src="/assets/sharedRecipes-B0f39vhW.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="modulepreload" crossorigin href="/assets/PageHeader-Bjb32J5Z.js">
+    <link rel="modulepreload" crossorigin href="/assets/RecipeCard-DKc8Zf-h.js">
   </head>
-  <body>
+  <body>
+    <div>
+      <div class="grid-lines-container">
+        <div class="grid-lines"></div>
+      </div>
+      <div class="vignette"></div>
+    </div>
     <div class="container">
-      <header>
-        <h1>Public Recipe Library</h1>
-        <nav>
-          <a href="index.html" class="button-link">
-            <svg class="icon">
-              <use href="/icons/nutrition.svg#icon-profile" />
-            </svg>
-            ← Back to Home
-          </a>
-        </nav>
-      </header>
+      <mpn-page-header
+        title="Public Recipe Library"
+        href="index.html"
+        icon="icon-profile"
+        label="← Back to Home"
+      >
+      </mpn-page-header>
 
       <main class="main-grid section">
         <section class="col-span-12 card">
           <ul class="sequence">
             <li>
-              <a href="recipe-chili.html">
-                <svg class="icon">
-                  <use href="/icons/nutrition.svg#icon-recipe-checklist" />
-                </svg>
-                Spicy Bean Chili
-              </a>
+              <mpn-recipe-card
+                title="Spicy Bean Chili"
+                href="recipe-chili.html"
+              ></mpn-recipe-card>
             </li>
             <li>
-              <a href="recipe-stirfry.html">
-                <svg class="icon">
-                  <use href="/icons/nutrition.svg#icon-recipe-checklist" />
-                </svg>
-                Chicken Veggie Stir Fry
-              </a>
+              <mpn-recipe-card
+                title="Chicken Veggie Stirfry"
+                href="recipe-stirfry.html"
+              ></mpn-recipe-card>
             </li>
           </ul>
         </section>

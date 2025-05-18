@@ -1,0 +1,23 @@
+{
+  "_id": "682958cecaa3b6dde83a844b",
+  "name": "Chicken Veggie Stir Fry",
+  "owner": "682956eacaa3b6dde83a8444",
+  "public": true,
+  "href": "recipe-stirfry.html",
+  "ingredients": [
+    {
+      "name": "Chicken Breast",
+      "unit": "g",
+      "amount": 200,
+      "calories": 165,
+      "protein": 31,
+      "carbs": 0,
+      "fat": 3.6
+    }
+  ],
+  "steps": [
+    "Cut chicken into strips.",
+    "Stir fry with vegetables over medium heat until cooked through.",
+    "Serve hot."
+  ]
+}

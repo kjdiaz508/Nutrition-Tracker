@@ -32,25 +32,53 @@ __export(MealPlanService_exports, {
 });
 module.exports = __toCommonJS(MealPlanService_exports);
 var import_mongoose = __toESM(require("mongoose"));
-const DaySchema = new import_mongoose.Schema({
-  weekday: { type: String, required: true, trim: true },
-  recipes: [{ type: import_mongoose.default.Schema.Types.ObjectId, ref: "Recipe" }]
-}, { _id: false });
-const MealPlanSchema = new import_mongoose.Schema({
-  name: { type: String, required: true, trim: true },
-  owner: { type: import_mongoose.default.Schema.Types.ObjectId, required: true, ref: "User" },
-  public: { type: Boolean, required: true },
-  days: { type: [DaySchema], default: [] }
-}, {
-  collection: "mealplans"
-});
+const DaySchema = new import_mongoose.Schema(
+  {
+    weekday: { type: String, required: true, trim: true },
+    recipes: [{ type: import_mongoose.default.Schema.Types.ObjectId, ref: "Recipe" }]
+  },
+  { _id: false }
+);
+const MealPlanSchema = new import_mongoose.Schema(
+  {
+    name: { type: String, required: true, trim: true },
+    owner: {
+      type: import_mongoose.default.Schema.Types.ObjectId,
+      required: true,
+      ref: "User"
+    },
+    public: { type: Boolean, required: true },
+    days: { type: [DaySchema], default: [] }
+  },
+  {
+    collection: "mealplans"
+  }
+);
 const MealPlanModel = (0, import_mongoose.model)("MealPlan", MealPlanSchema);
 function index() {
-  return MealPlanModel.find();
+  return MealPlanModel.find().populate("days.recipes");
 }
-function get(_id) {
-  return MealPlanModel.findById(_id).exec().catch((err) => {
-    throw new Error(`${_id} Not Found`);
+function get(id) {
+  return MealPlanModel.findById(id).populate("days.recipes").then((mp) => {
+    if (!mp) throw `${id} not found`;
+    return mp;
   });
 }
-var MealPlanService_default = { index, get };
+function create(json) {
+  const newMP = new MealPlanModel(json);
+  return newMP.save();
+}
+function update(id, json) {
+  return MealPlanModel.findByIdAndUpdate(id, json, { new: true }).then(
+    (updated) => {
+      if (!updated) throw `${id} not updated`;
+      return updated;
+    }
+  );
+}
+function remove(id) {
+  return MealPlanModel.findByIdAndDelete(id).then((deleted) => {
+    if (!deleted) throw `${id} not deleted`;
+  });
+}
+var MealPlanService_default = { index, get, create, update, remove };

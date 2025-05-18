@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shared Recipes</title>
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/tokens.css" />
+    <link rel="stylesheet" href="/styles/page.css" />
+    <link rel="stylesheet" href="/styles/background.css"/>
+  </head>
+  <body>
+    <script type="module">
+      import { define } from "@calpoly/mustang";
+      import { RecipeCardElement } from "/src/RecipeCard.ts";
+      import { PageHeaderElement } from "/src/PageHeader.ts";
+      define({
+        "mpn-recipe-card": RecipeCardElement,
+        "mpn-page-header": PageHeaderElement,
+      });
+    </script>
+    <div>
+      <div class="grid-lines-container">
+        <div class="grid-lines"></div>
+      </div>
+      <div class="vignette"></div>
+    </div>
+    <div class="container">
+      <mpn-page-header
+        title="Public Recipe Library"
+        href="index.html"
+        icon="icon-profile"
+        label="← Back to Home"
+      >
+      </mpn-page-header>
+
+      <main class="main-grid section">
+        <section class="col-span-12 card">
+          <ul class="sequence">
+            <li>
+              <mpn-recipe-card
+                title="Spicy Bean Chili"
+                href="recipe-chili.html"
+              ></mpn-recipe-card>
+            </li>
+            <li>
+              <mpn-recipe-card
+                title="Chicken Veggie Stirfry"
+                href="recipe-stirfry.html"
+              ></mpn-recipe-card>
+            </li>
+          </ul>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

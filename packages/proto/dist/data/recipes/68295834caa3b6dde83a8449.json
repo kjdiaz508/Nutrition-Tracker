@@ -1,0 +1,32 @@
+{
+  "_id": "68295834caa3b6dde83a8449",
+  "name": "Spicy Bean Chili",
+  "owner": "682956eacaa3b6dde83a8444",
+  "public": true,
+  "href": "recipe-chili.html",
+  "ingredients": [
+    {
+      "name": "Kidney Beans",
+      "unit": "cup",
+      "amount": 1,
+      "calories": 215,
+      "protein": 13,
+      "carbs": 40,
+      "fat": 0.9
+    },
+    {
+      "name": "Diced Tomatoes",
+      "unit": "cup",
+      "amount": 0.5,
+      "calories": 15,
+      "protein": 1,
+      "carbs": 3.5,
+      "fat": 0
+    }
+  ],
+  "steps": [
+    "Rinse and drain beans.",
+    "Simmer beans with diced tomatoes for 20 minutes.",
+    "Add spices to taste."
+  ]
+}

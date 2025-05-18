@@ -23,56 +23,20 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var import_express = __toESM(require("express"));
 var import_mongo = require("./services/mongo");
-var import_MealPlanService = __toESM(require("./services/MealPlanService"));
-var import_RecipeService = __toESM(require("./services/RecipeService"));
-var import_UserService = __toESM(require("./services/UserService"));
+var import_auth = __toESM(require("./routes/auth"));
+var import_mealplans = __toESM(require("./routes/mealplans"));
+var import_recipes = __toESM(require("./routes/recipes"));
+var import_users = __toESM(require("./routes/users"));
 const app = (0, import_express.default)();
 const port = process.env.PORT || 3e3;
 const staticDir = process.env.STATIC || "public";
 (0, import_mongo.connect)("Cluster0");
 app.use(import_express.default.static(staticDir));
-app.get("/hello", (req, res) => {
-  res.send("Hello, World");
-});
-app.get("/mealplans", (req, res) => {
-  import_MealPlanService.default.index().then((data) => {
-    if (data) res.set("Content-Type", "application/json").send(JSON.stringify(data));
-    else res.status(404).send();
-  });
-});
-app.get("/mealplans/:id", (req, res) => {
-  const { id } = req.params;
-  import_MealPlanService.default.get(id).then((data) => {
-    if (data) res.set("Content-Type", "application/json").send(JSON.stringify(data));
-    else res.status(404).send();
-  });
-});
-app.get("/recipes", (req, res) => {
-  import_RecipeService.default.index().then((data) => {
-    if (data) res.set("Content-Type", "application/json").send(JSON.stringify(data));
-    else res.status(404).send();
-  });
-});
-app.get("/recipes/:id", (req, res) => {
-  const { id } = req.params;
-  import_RecipeService.default.get(id).then((data) => {
-    if (data) res.set("Content-Type", "application/json").send(JSON.stringify(data));
-    else res.status(404).send();
-  });
-});
-app.get("/users", (req, res) => {
-  import_UserService.default.index().then((data) => {
-    if (data) res.set("Content-Type", "application/json").send(JSON.stringify(data));
-    else res.status(404).send();
-  });
-});
-app.get("/users/:id", (req, res) => {
-  const { id } = req.params;
-  import_UserService.default.get(id).then((data) => {
-    if (data) res.set("Content-Type", "application/json").send(JSON.stringify(data));
-    else res.status(404).send();
-  });
-});
+app.use(import_express.default.json());
+app.use("/auth", import_auth.default);
+app.use("/api/mealplans", import_mealplans.default);
+app.use("/api/recipes", import_recipes.default);
+app.use("/api/users", import_users.default);
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

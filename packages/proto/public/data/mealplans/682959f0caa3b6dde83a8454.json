@@ -1,0 +1,110 @@
+{
+  "_id": "682959f0caa3b6dde83a8454",
+  "name": "High Protein Meal Plan",
+  "owner": "682956eacaa3b6dde83a8444",
+  "public": true,
+  "days": [
+    {
+      "weekday": "Monday",
+      "recipes": [
+        {
+          "_id": "68295834caa3b6dde83a8449",
+          "name": "Spicy Bean Chili",
+          "owner": "682956eacaa3b6dde83a8444",
+          "public": true,
+          "href": "recipe-chili.html",
+          "ingredients": [
+            {
+              "name": "Kidney Beans",
+              "unit": "cup",
+              "amount": 1,
+              "calories": 215,
+              "protein": 13,
+              "carbs": 40,
+              "fat": 0.9
+            },
+            {
+              "name": "Diced Tomatoes",
+              "unit": "cup",
+              "amount": 0.5,
+              "calories": 15,
+              "protein": 1,
+              "carbs": 3.5,
+              "fat": 0
+            }
+          ],
+          "steps": [
+            "Rinse and drain beans.",
+            "Simmer beans with diced tomatoes for 20 minutes.",
+            "Add spices to taste."
+          ]
+        }
+      ]
+    },
+    {
+      "weekday": "Tuesday",
+      "recipes": [
+        {
+          "_id": "682958cecaa3b6dde83a844b",
+          "name": "Chicken Veggie Stir Fry",
+          "owner": "682956eacaa3b6dde83a8444",
+          "public": true,
+          "href": "recipe-stirfry.html",
+          "ingredients": [
+            {
+              "name": "Chicken Breast",
+              "unit": "g",
+              "amount": 200,
+              "calories": 165,
+              "protein": 31,
+              "carbs": 0,
+              "fat": 3.6
+            }
+          ],
+          "steps": [
+            "Cut chicken into strips.",
+            "Stir fry with vegetables over medium heat until cooked through.",
+            "Serve hot."
+          ]
+        }
+      ]
+    },
+    {
+      "weekday": "Wednesday",
+      "recipes": [
+        {
+          "_id": "68295834caa3b6dde83a8449",
+          "name": "Spicy Bean Chili",
+          "owner": "682956eacaa3b6dde83a8444",
+          "public": true,
+          "href": "recipe-chili.html",
+          "ingredients": [
+            {
+              "name": "Kidney Beans",
+              "unit": "cup",
+              "amount": 1,
+              "calories": 215,
+              "protein": 13,
+              "carbs": 40,
+              "fat": 0.9
+            },
+            {
+              "name": "Diced Tomatoes",
+              "unit": "cup",
+              "amount": 0.5,
+              "calories": 15,
+              "protein": 1,
+              "carbs": 3.5,
+              "fat": 0
+            }
+          ],
+          "steps": [
+            "Rinse and drain beans.",
+            "Simmer beans with diced tomatoes for 20 minutes.",
+            "Add spices to taste."
+          ]
+        }
+      ]
+    }
+  ]
+}

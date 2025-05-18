@@ -52,9 +52,25 @@ const RecipeModel = (0, import_mongoose.model)("Recipe", RecipeSchema);
 function index() {
   return RecipeModel.find();
 }
-function get(_id) {
-  return RecipeModel.findById(_id).exec().catch((err) => {
-    throw new Error(`${_id} Not Found`);
+function get(id) {
+  return RecipeModel.findById(id).then((recipe) => {
+    if (!recipe) throw `${id} not found`;
+    return recipe;
   });
 }
-var RecipeService_default = { index, get };
+function create(json) {
+  const newRecipe = new RecipeModel(json);
+  return newRecipe.save();
+}
+function update(id, json) {
+  return RecipeModel.findByIdAndUpdate(id, json, { new: true }).then((updated) => {
+    if (!updated) throw `${id} not updated`;
+    return updated;
+  });
+}
+function remove(id) {
+  return RecipeModel.findByIdAndDelete(id).then((deleted) => {
+    if (!deleted) throw `${id} not deleted`;
+  });
+}
+var RecipeService_default = { index, get, create, update, remove };

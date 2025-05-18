@@ -6,30 +6,33 @@
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
+    <link rel="stylesheet" href="/styles/background.css"/>
+    <script type="module" crossorigin src="/assets/shoppingList-DsVUjFw-.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="modulepreload" crossorigin href="/assets/PageHeader-Bjb32J5Z.js">
+    <link rel="modulepreload" crossorigin href="/assets/state-C1qfjcW9.js">
   </head>
-  <body>
+  <body>
+    <div>
+      <div class="grid-lines-container">
+        <div class="grid-lines"></div>
+      </div>
+      <div class="vignette"></div>
+    </div>
     <div class="container">
-      <header>
-        <h1>Shopping List</h1>
-        <nav>
-          <a href="meal-plan.html" class="button-link">
-            <svg class="icon">
-              <use href="/icons/nutrition.svg#icon-meal-plan" />
-            </svg>
-            ← Back to Meal Plan
-          </a>
-        </nav>
-      </header>
+      <mpn-page-header
+        title="Shopping List"
+        href="meal-plan.html"
+        icon="icon-meal-plan"
+        label="← Back to Meal Plan"
+      >
+      </mpn-page-header>
 
       <main class="main-grid section">
-        <section class="col-span-12 card">
-          <h2>For: High Protein Meal Plan</h2>
-          <ul class="sequence">
-            <li>Chicken Breast – 200g</li>
-            <li>Kidney Beans – 1 cup</li>
-            <li>Diced Tomatoes – 1/2 cup</li>
-          </ul>
-        </section>
+        <mpn-shopping-list
+          class="col-span-12"
+          src="/api/mealplans/682959f0caa3b6dde83a8454"
+        ></mpn-shopping-list>
       </main>
     </div>
   </body>
