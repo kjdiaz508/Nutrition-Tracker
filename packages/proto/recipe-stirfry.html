@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
+    <link rel="stylesheet" href="/styles/background.css"/>
   </head>
   <body>
     <script type="module">
@@ -19,6 +20,12 @@
         "mpn-ingredients-list": IngredientsListElement,
       });
     </script>
+    <div>
+      <div class="grid-lines-container">
+        <div class="grid-lines"></div>
+      </div>
+      <div class="vignette"></div>
+    </div>
     <div class="container">
       <mpn-page-header
         title="Chicken Veggie Stir Fry"
@@ -29,7 +36,7 @@
       </mpn-page-header>
 
       <mpn-recipe-details
-        src="/data/recipes/682958cecaa3b6dde83a844b.json"
+        src="/api/recipes/682958cecaa3b6dde83a844b"
       ></mpn-recipe-details>
     </div>
   </body>

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
+    <link rel="stylesheet" href="/styles/background.css"/>
   </head>
   <body>
     <script type="module">
@@ -19,9 +20,15 @@
         "mpn-meal-day": MealDayElement,
         "mpn-recipe-link": RecipeLinkElement,
         "mpn-meal-plan": MealPlanElement,
-        "mpn-page-header": PageHeaderElement
+        "mpn-page-header": PageHeaderElement,
       });
     </script>
+    <div>
+      <div class="grid-lines-container">
+        <div class="grid-lines"></div>
+      </div>
+      <div class="vignette"></div>
+    </div>
     <div class="container">
       <mpn-page-header
         title="High Protein Meal Plan"
@@ -33,7 +40,7 @@
 
       <main class="main-grid section">
         <mpn-meal-plan
-          src="/data/mealplans/682959f0caa3b6dde83a8454.json"
+          src="/api/mealplans/682959f0caa3b6dde83a8454"
           class="col-span-12"
         ></mpn-meal-plan>
 

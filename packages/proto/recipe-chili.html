@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
+    <link rel="stylesheet" href="/styles/background.css"/>
   </head>
   <body>
     <script type="module">
@@ -16,9 +17,15 @@
       define({
         "mpn-page-header": PageHeaderElement,
         "mpn-recipe-details": RecipeDetailsElement,
-        "mpn-ingredients-list": IngredientsListElement
+        "mpn-ingredients-list": IngredientsListElement,
       });
     </script>
+    <div>
+      <div class="grid-lines-container">
+        <div class="grid-lines"></div>
+      </div>
+      <div class="vignette"></div>
+    </div>
     <div class="container">
       <mpn-page-header
         title="Spicy Bean Chili"
@@ -29,7 +36,7 @@
       </mpn-page-header>
 
       <mpn-recipe-details
-        src="/data/recipes/68295834caa3b6dde83a8449.json"
+        src="/api/recipes/68295834caa3b6dde83a8449"
       ></mpn-recipe-details>
     </div>
   </body>

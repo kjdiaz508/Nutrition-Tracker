@@ -22,14 +22,33 @@ const RecipeSchema = new Schema<Recipe>({
 const RecipeModel = model<Recipe>("Recipe", RecipeSchema);
 
 function index(): Promise<Recipe[]> {
-    return RecipeModel.find();
+  return RecipeModel.find();
 }
 
-function get(_id: string): Promise<Recipe | null> {
-    return RecipeModel.findById(_id).exec().catch((err) => {
-        throw new Error(`${_id} Not Found`);
-    });
+function get(id: string): Promise<Recipe> {
+  return RecipeModel.findById(id).then((recipe) => {
+    if (!recipe) throw `${id} not found`;
+    return recipe;
+  });
 }
 
-export default { index, get };
+function create(json: Recipe): Promise<Recipe> {
+  const newRecipe = new RecipeModel(json);
+  return newRecipe.save();
+}
+
+function update(id: string, json: Recipe): Promise<Recipe> {
+  return RecipeModel.findByIdAndUpdate(id, json, { new: true }).then((updated) => {
+    if (!updated) throw `${id} not updated`;
+    return updated;
+  });
+}
+
+function remove(id: string): Promise<void> {
+  return RecipeModel.findByIdAndDelete(id).then((deleted) => {
+    if (!deleted) throw `${id} not deleted`;
+  });
+}
+
+export default { index, get, create, update, remove };
 

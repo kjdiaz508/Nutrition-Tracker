@@ -32,21 +32,42 @@ __export(UserService_exports, {
 });
 module.exports = __toCommonJS(UserService_exports);
 var import_mongoose = __toESM(require("mongoose"));
-const UserSchema = new import_mongoose.Schema({
-  firstName: { type: String, required: true, trim: true },
-  lastName: { type: String, required: true, trim: true },
-  email: { type: String, required: true, trim: true },
-  currentMealPlan: { type: import_mongoose.default.Schema.Types.ObjectId, ref: "MealPlan" },
-  mealPlans: [{ type: import_mongoose.default.Schema.Types.ObjectId, ref: "MealPlan" }],
-  recipes: [{ type: import_mongoose.default.Schema.Types.ObjectId, ref: "recipes" }]
-}, { collection: "users" });
+const UserSchema = new import_mongoose.Schema(
+  {
+    firstName: { type: String, required: true, trim: true },
+    lastName: { type: String, required: true, trim: true },
+    email: { type: String, required: true, trim: true },
+    currentMealPlan: { type: import_mongoose.default.Schema.Types.ObjectId, ref: "MealPlan" },
+    mealPlans: [{ type: import_mongoose.default.Schema.Types.ObjectId, ref: "MealPlan" }],
+    recipes: [{ type: import_mongoose.default.Schema.Types.ObjectId, ref: "recipes" }]
+  },
+  { collection: "users" }
+);
 const UserModel = (0, import_mongoose.model)("User", UserSchema);
 function index() {
-  return UserModel.find();
+  return UserModel.find().populate("mealPlans", "_id name").populate("recipes", "_id name");
 }
-function get(_id) {
-  return UserModel.findById(_id).exec().catch((err) => {
-    throw new Error(`${_id} Not Found`);
+function get(id) {
+  return UserModel.findById(id).populate("mealPlans", "_id name").populate("recipes", "_id name").then((user) => {
+    if (!user) throw `${id} not found`;
+    return user;
   });
 }
-var UserService_default = { index, get };
+function create(json) {
+  const newUser = new UserModel(json);
+  return newUser.save();
+}
+function update(id, json) {
+  return UserModel.findByIdAndUpdate(id, json, { new: true }).then(
+    (updated) => {
+      if (!updated) throw `${id} not updated`;
+      return updated;
+    }
+  );
+}
+function remove(id) {
+  return UserModel.findByIdAndDelete(id).then((deleted) => {
+    if (!deleted) throw `${id} not deleted`;
+  });
+}
+var UserService_default = { index, get, create, update, remove };

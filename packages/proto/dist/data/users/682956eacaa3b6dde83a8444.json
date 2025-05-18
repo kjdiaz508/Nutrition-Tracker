@@ -1,0 +1,26 @@
+{
+  "_id": "682956eacaa3b6dde83a8444",
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "email": "jane@example.com",
+  "mealPlans": [
+    {
+      "_id": "682959f0caa3b6dde83a8454",
+      "name": "High Protein Meal Plan"
+    }
+  ],
+  "recipes": [
+    {
+      "_id": "68295834caa3b6dde83a8449",
+      "name": "Spicy Bean Chili"
+    },
+    {
+      "_id": "682958cecaa3b6dde83a844b",
+      "name": "Chicken Veggie Stir Fry"
+    }
+  ],
+  "currentMealPlan": {
+    "_id": "682959f0caa3b6dde83a8454",
+    "name": "High Protein Meal Plan"
+  }
+}

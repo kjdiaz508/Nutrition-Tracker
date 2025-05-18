@@ -1,0 +1,1 @@
+import"./modulepreload-polyfill-B5Qt9EMX.js";import{d as e,P as i}from"./PageHeader-Bjb32J5Z.js";import{I as t,R as m}from"./RecipeDetails-wNTKlF1y.js";import"./state-C1qfjcW9.js";e({"mpn-page-header":i,"mpn-recipe-details":m,"mpn-ingredients-list":t});
