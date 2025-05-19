@@ -6,72 +6,71 @@
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
-    <link rel="stylesheet" href="/styles/background.css"/>
-    <script type="module" crossorigin src="/assets/user-BmmzViOB.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
-    <link rel="modulepreload" crossorigin href="/assets/PageHeader-Bjb32J5Z.js">
-    <link rel="modulepreload" crossorigin href="/assets/MealPlanCard-BS6kjh6A.js">
-    <link rel="modulepreload" crossorigin href="/assets/RecipeCard-DKc8Zf-h.js">
+    <link rel="stylesheet" href="/styles/background.css" />
+    <script type="module" crossorigin src="/assets/user-WcL-CaEA.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/PageHeader-B0vX37UT.js">
+    <link rel="modulepreload" crossorigin href="/assets/MealPlanCard-DXaWeQ5v.js">
+    <link rel="modulepreload" crossorigin href="/assets/RecipeCard-BUiO7ZjH.js">
   </head>
-  <body>
-    <div>
-      <div class="grid-lines-container">
-        <div class="grid-lines"></div>
+  <body>
+    <mu-auth provides="mpn:auth">
+      <div>
+        <div class="grid-lines-container">
+          <div class="grid-lines"></div>
+        </div>
+        <div class="vignette"></div>
       </div>
-      <div class="vignette"></div>
-    </div>
-    <div class="container">
-      <mpn-page-header
-        title="Jane Doe"
-        href="index.html"
-        icon="icon-profile"
-        label="← Back to Home"
-      >
-      </mpn-page-header>
-
-      <main class="main-grid section">
-        <section class="col-span-12 card">
-          <h2>My Recipes</h2>
-          <ul class="sequence">
-            <li>
-              <mpn-recipe-card
-                title="Spicy Bean Chili"
-                href="recipe-chili.html"
-              ></mpn-recipe-card>
-            </li>
-            <li>
-              <mpn-recipe-card
-                title="Chicken Veggie Stirfry"
-                href="recipe-stirfry.html"
-              ></mpn-recipe-card>
-            </li>
-          </ul>
-        </section>
-
-        <section class="col-span-12 card section">
-          <h2>My Meal Plans</h2>
-          <ul class="sequence">
-            <li>
-              <mpn-mealplan-card
-                title="Weekly High Protein Plan"
-                href="meal-plan.html"
-              ></mpn-mealplan-card>
-            </li>
-            <li>
-              <mpn-mealplan-card
-                title="Weekly High Protein Plan"
-                href="meal-plan.html"
-              ></mpn-mealplan-card>
-            </li>
-            <li>
-              <mpn-mealplan-card
-                title="Weekly High Protein Plan"
-                href="meal-plan.html"
-              ></mpn-mealplan-card>
-            </li>
-          </ul>
-        </section>
-      </main>
-    </div>
+      <div class="container">
+        <mpn-page-header
+          title="Jane Doe"
+          href="index.html"
+          icon="icon-profile"
+          label="← Back to Home"
+        >
+        </mpn-page-header>
+        <main class="main-grid section">
+          <section class="col-span-12 card">
+            <h2>My Recipes</h2>
+            <ul class="sequence">
+              <li>
+                <mpn-recipe-card
+                  title="Spicy Bean Chili"
+                  href="recipe-chili.html"
+                ></mpn-recipe-card>
+              </li>
+              <li>
+                <mpn-recipe-card
+                  title="Chicken Veggie Stirfry"
+                  href="recipe-stirfry.html"
+                ></mpn-recipe-card>
+              </li>
+            </ul>
+          </section>
+          <section class="col-span-12 card section">
+            <h2>My Meal Plans</h2>
+            <ul class="sequence">
+              <li>
+                <mpn-mealplan-card
+                  title="Weekly High Protein Plan"
+                  href="meal-plan.html"
+                ></mpn-mealplan-card>
+              </li>
+              <li>
+                <mpn-mealplan-card
+                  title="Weekly High Protein Plan"
+                  href="meal-plan.html"
+                ></mpn-mealplan-card>
+              </li>
+              <li>
+                <mpn-mealplan-card
+                  title="Weekly High Protein Plan"
+                  href="meal-plan.html"
+                ></mpn-mealplan-card>
+              </li>
+            </ul>
+          </section>
+        </main>
+      </div>
+    </mu-auth>
   </body>
 </html>

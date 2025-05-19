@@ -16,9 +16,9 @@ app.use(express.static(staticDir));
 app.use(express.json());
 app.use("/auth", auth);
 
-app.use("/api/mealplans", mealplans);
-app.use("/api/recipes", recipes);
-app.use("/api/users", users);
+app.use("/api/mealplans", authenticateUser, mealplans);
+app.use("/api/recipes", authenticateUser, recipes);
+app.use("/api/users", authenticateUser, users);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

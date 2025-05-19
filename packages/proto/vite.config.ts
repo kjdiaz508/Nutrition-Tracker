@@ -16,6 +16,7 @@ export default defineConfig({
         sharedRecipes: resolve(__dirname, 'shared-recipes.html'),
         shoppingList: resolve(__dirname, 'shopping-list.html'),
         user: resolve(__dirname, 'user.html'),
+        login: resolve(__dirname, "login.html"),
       },
     },
   },

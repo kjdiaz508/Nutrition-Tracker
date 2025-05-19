@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/tokens.css" />
+    <link rel="stylesheet" href="/styles/page.css" />
+    <link rel="stylesheet" href="/styles/background.css" />
+
+    <script type="module" crossorigin src="/assets/login-CzYyYDPP.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/PageHeader-B0vX37UT.js">
+  </head>
+  <body>
+    <mu-auth provides="mpn:auth">
+      <div>
+        <div class="grid-lines-container">
+          <div class="grid-lines"></div>
+        </div>
+        <div class="vignette"></div>
+      </div>
+      <div class="container">
+        <mpn-page-header
+          title="Log In or Sign Up"
+          href="index.html"
+        ></mpn-page-header>
+        <main class="main-grid section">
+          <section class="col-span-12 card center-content">
+            <div class="sequence">
+              <h2>Login</h2>
+              <login-form api="/auth/login" redirect="/">
+                <label>
+                  <span>Username:</span>
+                  <input name="username" autocomplete="off" />
+                </label>
+                <label>
+                  <span>Password:</span>
+                  <input type="password" name="password" />
+                </label>
+              </login-form>
+            </div>
+          </section>
+          <section class="col-span-12 section">
+            <p>
+              Or did you want to
+              <a href="/newuser.html" class="button-link"
+                >Sign up as a new user</a
+              >?
+            </p>
+          </section>
+        </main>
+      </div>
+    </mu-auth>
+  </body>
+</html>

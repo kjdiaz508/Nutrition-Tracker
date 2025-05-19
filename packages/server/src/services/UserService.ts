@@ -5,7 +5,7 @@ const UserSchema = new Schema<User>(
   {
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
-    email: { type: String, required: true, trim: true },
+    username: { type: String, required: true, trim: true },
     currentMealPlan: { type: mongoose.Schema.Types.ObjectId, ref: "MealPlan" },
     mealPlans: [{ type: mongoose.Schema.Types.ObjectId, ref: "MealPlan" }],
     recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "recipes" }],

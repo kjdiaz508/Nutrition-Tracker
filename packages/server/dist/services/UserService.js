@@ -36,7 +36,7 @@ const UserSchema = new import_mongoose.Schema(
   {
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
-    email: { type: String, required: true, trim: true },
+    username: { type: String, required: true, trim: true },
     currentMealPlan: { type: import_mongoose.default.Schema.Types.ObjectId, ref: "MealPlan" },
     mealPlans: [{ type: import_mongoose.default.Schema.Types.ObjectId, ref: "MealPlan" }],
     recipes: [{ type: import_mongoose.default.Schema.Types.ObjectId, ref: "recipes" }]

@@ -6,38 +6,40 @@
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
-    <link rel="stylesheet" href="/styles/background.css"/>
-  </head>
-  <body>
+    <link rel="stylesheet" href="/styles/background.css" />
     <script type="module">
-      import { define } from "@calpoly/mustang";
+      import { define, Auth } from "@calpoly/mustang";
       import { PageHeaderElement } from "/src/PageHeader.ts";
       import { IngredientsListElement } from "/src/IngredientsList.ts";
       import { RecipeDetailsElement } from "/src/RecipeDetails.ts";
       define({
+        "mu-auth": Auth.Provider,
         "mpn-page-header": PageHeaderElement,
         "mpn-recipe-details": RecipeDetailsElement,
         "mpn-ingredients-list": IngredientsListElement,
       });
     </script>
-    <div>
-      <div class="grid-lines-container">
-        <div class="grid-lines"></div>
+  </head>
+  <body>
+    <mu-auth provides="mpn:auth">
+      <div>
+        <div class="grid-lines-container">
+          <div class="grid-lines"></div>
+        </div>
+        <div class="vignette"></div>
       </div>
-      <div class="vignette"></div>
-    </div>
-    <div class="container">
-      <mpn-page-header
-        title="Chicken Veggie Stir Fry"
-        href="shared-recipes.html"
-        icon="icon-cookbook"
-        label="← Back to Shared Recipes"
-      >
-      </mpn-page-header>
-
-      <mpn-recipe-details
-        src="/api/recipes/682958cecaa3b6dde83a844b"
-      ></mpn-recipe-details>
-    </div>
+      <div class="container">
+        <mpn-page-header
+          title="Chicken Veggie Stir Fry"
+          href="shared-recipes.html"
+          icon="icon-cookbook"
+          label="← Back to Shared Recipes"
+        >
+        </mpn-page-header>
+        <mpn-recipe-details
+          src="/api/recipes/682958cecaa3b6dde83a844b"
+        ></mpn-recipe-details>
+      </div>
+    </mu-auth>
   </body>
 </html>

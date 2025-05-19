@@ -1,3 +1,4 @@
+import { Auth, Observer } from "@calpoly/mustang";
 import { LitElement, html } from "lit";
 import { property, state } from "lit/decorators.js";
 
@@ -32,18 +33,33 @@ export class ShoppingListElement extends LitElement {
   @property() src?: string;
   @state() mealPlan?: MealPlan;
 
+  _authObserver = new Observer<Auth.Model>(this, "mpn:auth");
+  _user?: Auth.User;
+
   createRenderRoot() {
     return this;
   }
 
   connectedCallback() {
     super.connectedCallback();
-    if (this.src) this.hydrate(this.src);
+    this._authObserver.observe((auth: Auth.Model) => {
+      this._user = auth.user;
+      if (this.src) this.hydrate(this.src);
+    });
+  }
+
+  get authorization(): { Authorization?: string } {
+    if (this._user && this._user.authenticated)
+      return {
+        Authorization:
+          `Bearer ${(this._user as Auth.AuthenticatedUser).token}`
+      };
+    else return {};
   }
 
   async hydrate(src: string) {
     try {
-      const res = await fetch(src);
+      const res = await fetch(src, { headers: this.authorization });
       this.mealPlan = await res.json();
     } catch (err) {
       console.error("Error loading meal plan for shopping list:", err);
@@ -80,8 +96,7 @@ export class ShoppingListElement extends LitElement {
         <h2>For: ${this.mealPlan.name}</h2>
         <ul class="sequence">
           ${ingredients.map(
-            (ing) =>
-              html`<li>${ing.name} – ${ing.amount} ${ing.unit}</li>`
+            (ing) => html`<li>${ing.name} – ${ing.amount} ${ing.unit}</li>`
           )}
         </ul>
       </section>

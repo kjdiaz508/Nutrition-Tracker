@@ -6,32 +6,31 @@
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
-    <link rel="stylesheet" href="/styles/background.css"/>
-    <script type="module" crossorigin src="/assets/stirfry-DJqXeOif.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
-    <link rel="modulepreload" crossorigin href="/assets/PageHeader-Bjb32J5Z.js">
-    <link rel="modulepreload" crossorigin href="/assets/state-C1qfjcW9.js">
-    <link rel="modulepreload" crossorigin href="/assets/RecipeDetails-wNTKlF1y.js">
+    <link rel="stylesheet" href="/styles/background.css" />
+    <script type="module" crossorigin src="/assets/stirfry-C2m7pyAb.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/PageHeader-B0vX37UT.js">
+    <link rel="modulepreload" crossorigin href="/assets/RecipeDetails-CSsOu158.js">
   </head>
-  <body>
-    <div>
-      <div class="grid-lines-container">
-        <div class="grid-lines"></div>
+  <body>
+    <mu-auth provides="mpn:auth">
+      <div>
+        <div class="grid-lines-container">
+          <div class="grid-lines"></div>
+        </div>
+        <div class="vignette"></div>
       </div>
-      <div class="vignette"></div>
-    </div>
-    <div class="container">
-      <mpn-page-header
-        title="Chicken Veggie Stir Fry"
-        href="shared-recipes.html"
-        icon="icon-cookbook"
-        label="← Back to Shared Recipes"
-      >
-      </mpn-page-header>
-
-      <mpn-recipe-details
-        src="/api/recipes/682958cecaa3b6dde83a844b"
-      ></mpn-recipe-details>
-    </div>
+      <div class="container">
+        <mpn-page-header
+          title="Chicken Veggie Stir Fry"
+          href="shared-recipes.html"
+          icon="icon-cookbook"
+          label="← Back to Shared Recipes"
+        >
+        </mpn-page-header>
+        <mpn-recipe-details
+          src="/api/recipes/682958cecaa3b6dde83a844b"
+        ></mpn-recipe-details>
+      </div>
+    </mu-auth>
   </body>
 </html>
