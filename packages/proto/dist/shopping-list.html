@@ -6,34 +6,33 @@
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
-    <link rel="stylesheet" href="/styles/background.css"/>
-    <script type="module" crossorigin src="/assets/shoppingList-DsVUjFw-.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
-    <link rel="modulepreload" crossorigin href="/assets/PageHeader-Bjb32J5Z.js">
-    <link rel="modulepreload" crossorigin href="/assets/state-C1qfjcW9.js">
+    <link rel="stylesheet" href="/styles/background.css" />
+    <script type="module" crossorigin src="/assets/shoppingList-CtzSi_Zz.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/PageHeader-B0vX37UT.js">
   </head>
-  <body>
-    <div>
-      <div class="grid-lines-container">
-        <div class="grid-lines"></div>
+  <body>
+    <mu-auth provides="mpn:auth">
+      <div>
+        <div class="grid-lines-container">
+          <div class="grid-lines"></div>
+        </div>
+        <div class="vignette"></div>
       </div>
-      <div class="vignette"></div>
-    </div>
-    <div class="container">
-      <mpn-page-header
-        title="Shopping List"
-        href="meal-plan.html"
-        icon="icon-meal-plan"
-        label="← Back to Meal Plan"
-      >
-      </mpn-page-header>
-
-      <main class="main-grid section">
-        <mpn-shopping-list
-          class="col-span-12"
-          src="/api/mealplans/682959f0caa3b6dde83a8454"
-        ></mpn-shopping-list>
-      </main>
-    </div>
+      <div class="container">
+        <mpn-page-header
+          title="Shopping List"
+          href="meal-plan.html"
+          icon="icon-meal-plan"
+          label="← Back to Meal Plan"
+        >
+        </mpn-page-header>
+        <main class="main-grid section">
+          <mpn-shopping-list
+            class="col-span-12"
+            src="/api/mealplans/682959f0caa3b6dde83a8454"
+          ></mpn-shopping-list>
+        </main>
+      </div>
+    </mu-auth>
   </body>
 </html>

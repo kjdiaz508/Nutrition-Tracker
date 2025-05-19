@@ -34,9 +34,9 @@ const staticDir = process.env.STATIC || "public";
 app.use(import_express.default.static(staticDir));
 app.use(import_express.default.json());
 app.use("/auth", import_auth.default);
-app.use("/api/mealplans", import_mealplans.default);
-app.use("/api/recipes", import_recipes.default);
-app.use("/api/users", import_users.default);
+app.use("/api/mealplans", import_auth.authenticateUser, import_mealplans.default);
+app.use("/api/recipes", import_auth.authenticateUser, import_recipes.default);
+app.use("/api/users", import_auth.authenticateUser, import_users.default);
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

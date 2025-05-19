@@ -6,57 +6,59 @@
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
-    <link rel="stylesheet" href="/styles/background.css"/>
-  </head>
-  <body>
+    <link rel="stylesheet" href="/styles/background.css" />
     <script type="module">
-      import { define } from "@calpoly/mustang";
+      import { define, Auth } from "@calpoly/mustang";
       import { MealPlanCardElement } from "/src/MealPlanCard.ts";
       import { PageHeaderElement } from "/src/PageHeader.ts";
       define({
+        "mu-auth": Auth.Provider,
         "mpn-mealplan-card": MealPlanCardElement,
         "mpn-page-header": PageHeaderElement,
       });
     </script>
-    <div>
-      <div class="grid-lines-container">
-        <div class="grid-lines"></div>
+  </head>
+  <body>
+    <mu-auth provides="mpn:auth">
+      <div>
+        <div class="grid-lines-container">
+          <div class="grid-lines"></div>
+        </div>
+        <div class="vignette"></div>
       </div>
-      <div class="vignette"></div>
-    </div>
-    <div class="container">
-      <mpn-page-header
-        title="Public Meal Plan Library"
-        href="index.html"
-        icon="icon-profile"
-        label="← Back to Home"
-      >
-      </mpn-page-header>
-
-      <main class="main-grid section">
-        <section class="col-span-12">
-          <ul class="sequence card">
-            <li>
-              <mpn-mealplan-card
-                title="Weekly High Protein Plan"
-                href="meal-plan.html"
-              ></mpn-mealplan-card>
-            </li>
-            <li>
-              <mpn-mealplan-card
-                title="Weekly High Protein Plan"
-                href="meal-plan.html"
-              ></mpn-mealplan-card>
-            </li>
-            <li>
-              <mpn-mealplan-card
-                title="Weekly High Protein Plan"
-                href="meal-plan.html"
-              ></mpn-mealplan-card>
-            </li>
-          </ul>
-        </section>
-      </main>
-    </div>
+      <div class="container">
+        <mpn-page-header
+          title="Public Meal Plan Library"
+          href="index.html"
+          icon="icon-profile"
+          label="← Back to Home"
+        >
+        </mpn-page-header>
+        <main class="main-grid section">
+          <section class="col-span-12">
+            <ul class="sequence card">
+              <li>
+                <mpn-mealplan-card
+                  title="Weekly High Protein Plan"
+                  href="meal-plan.html"
+                ></mpn-mealplan-card>
+              </li>
+              <li>
+                <mpn-mealplan-card
+                  title="Weekly High Protein Plan"
+                  href="meal-plan.html"
+                ></mpn-mealplan-card>
+              </li>
+              <li>
+                <mpn-mealplan-card
+                  title="Weekly High Protein Plan"
+                  href="meal-plan.html"
+                ></mpn-mealplan-card>
+              </li>
+            </ul>
+          </section>
+        </main>
+      </div>
+    </mu-auth>
   </body>
 </html>
