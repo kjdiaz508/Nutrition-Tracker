@@ -1,6 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { property, state } from "lit/decorators.js";
-import reset from "./styles/reset.css.ts";
+import reset from "../styles/reset.css";
 import { Observer, Auth, Events } from "@calpoly/mustang";
 
 export class PageHeaderElement extends LitElement {
@@ -31,7 +31,7 @@ export class PageHeaderElement extends LitElement {
       const { user } = auth;
       console.log("user: ", user);
       if (user && user.authenticated) {
-        console.log("authenticated")
+        console.log("authenticated");
         this.loggedIn = true;
         this.userid = user.username;
       } else {
@@ -68,7 +68,7 @@ export class PageHeaderElement extends LitElement {
 
   renderSignInButton() {
     return html`
-      <a href="login.html">
+      <a href="/app/login">
         <svg class="icon">
           <use href="/icons/nutrition.svg#icon-profile" />
         </svg>
@@ -137,7 +137,7 @@ export class PageHeaderElement extends LitElement {
               : this.renderSignInButton()}
           </li>
           <li>
-            <a href="shared-recipes.html" class="button-link">
+            <a href="/app/discover/recipes" class="button-link">
               <svg class="icon">
                 <use href="/icons/nutrition.svg#icon-cookbook" />
               </svg>
@@ -145,7 +145,7 @@ export class PageHeaderElement extends LitElement {
             </a>
           </li>
           <li>
-            <a href="shared-plans.html" class="button-link">
+            <a href="/app/discover/plans" class="button-link">
               <svg class="icon">
                 <use href="/icons/nutrition.svg#icon-meal-plan" />
               </svg>

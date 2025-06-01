@@ -1,4 +1,4 @@
-import{i as p,x as t,r as l,b as f,O as m,n as b,c as g}from"./PageHeader-B0vX37UT.js";const n=class n extends p{render(){return t`
+import{i as p,x as t,r as l,b as f,O as m,n as b,c as g}from"./PageHeader-B6rjJ5UI.js";const n=class n extends p{render(){return t`
       <section>
         <h2>Ingredients</h2>
         <ul>

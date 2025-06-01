@@ -1,0 +1,11 @@
+body {
+  background-color: var(--color-background-page);
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}

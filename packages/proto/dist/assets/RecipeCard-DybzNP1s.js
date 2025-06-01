@@ -1,4 +1,4 @@
-import{i as f,r as p,b as h,x as u,n as c}from"./PageHeader-B0vX37UT.js";var d=Object.defineProperty,l=(i,o,a,v)=>{for(var r=void 0,s=i.length-1,n;s>=0;s--)(n=i[s])&&(r=n(o,a,r)||r);return r&&d(o,a,r),r};const t=class t extends f{constructor(){super(...arguments),this.title="",this.href=""}render(){return u`
+import{i as f,r as p,b as h,x as u,n as c}from"./PageHeader-B6rjJ5UI.js";var d=Object.defineProperty,l=(i,o,a,v)=>{for(var r=void 0,s=i.length-1,n;s>=0;s--)(n=i[s])&&(r=n(o,a,r)||r);return r&&d(o,a,r),r};const t=class t extends f{constructor(){super(...arguments),this.title="",this.href=""}render(){return u`
       <a href=${this.href}>
         <svg class="icon">
           <use href="/icons/nutrition.svg#icon-recipe-checklist"></use>
