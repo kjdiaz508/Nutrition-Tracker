@@ -1,13 +1,12 @@
 import { LitElement, html, css } from "lit";
 import { property, state } from "lit/decorators.js";
 import reset from "../styles/reset.css";
-import { Observer, Auth, Events } from "@calpoly/mustang";
+import { Observer, Auth } from "@calpoly/mustang";
 
 export class PageHeaderElement extends LitElement {
   @property() title = "";
-  @property() href = "";
-  @property() icon = "icon-profile";
-  @property() label = "← Back";
+  @property() label = "Back";
+  @property({ type: Boolean }) hideBack = false;
 
   _authObserver = new Observer<Auth.Model>(this, "mpn:auth");
 
@@ -41,43 +40,7 @@ export class PageHeaderElement extends LitElement {
     });
   }
 
-  renderProfileButton() {
-    return html`
-      <a href="user.html" class="button-link">
-        <svg class="icon">
-          <use href="/icons/nutrition.svg#icon-profile" />
-        </svg>
-        My Profile
-      </a>
-    `;
-  }
-
-  renderSignOutButton() {
-    return html`
-      <button
-        @click=${(e: Event) =>
-          Events.relay(e, "auth:message", ["auth/signout"])}
-      >
-        <svg class="icon">
-          <use href="/icons/nutrition.svg#icon-profile" />
-        </svg>
-        Sign Out
-      </button>
-    `;
-  }
-
-  renderSignInButton() {
-    return html`
-      <a href="/app/login">
-        <svg class="icon">
-          <use href="/icons/nutrition.svg#icon-profile" />
-        </svg>
-        Sign In
-      </a>
-    `;
-  }
-
-  static styles = [
+    static styles = [
     reset.styles,
     css`
       header {
@@ -94,9 +57,11 @@ export class PageHeaderElement extends LitElement {
       button {
         font: inherit;
       }
-      a,
       button {
-        display: inline-block;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
         background-color: var(--color-accent);
         color: white;
         padding: var(--space-sm) var(--space-md);
@@ -106,7 +71,6 @@ export class PageHeaderElement extends LitElement {
         font-weight: bold;
         transition: background-color 0.2s ease;
       }
-      a:hover,
       button:hover {
         background-color: #c75c1d;
       }
@@ -127,30 +91,66 @@ export class PageHeaderElement extends LitElement {
     `,
   ];
 
+  renderProfileButton() {
+    return html`
+      <mpn-button-link href="/app/profile" class="button-link">
+        <svg class="icon">
+          <use href="/icons/nutrition.svg#icon-profile" />
+        </svg>
+        My Profile
+      </mpn-button-link>
+    `;
+  }
+
+  // renderSignOutButton() {
+  //   return html`
+  //     <button
+  //       @click=${(e: Event) =>
+  //         Events.relay(e, "auth:message", ["auth/signout"])}
+  //     >
+  //       <svg class="icon">
+  //         <use href="/icons/nutrition.svg#icon-profile" />
+  //       </svg>
+  //       Sign Out
+  //     </button>
+  //   `;
+  // }
+
+  renderSignInButton() {
+    return html`
+      <mpn-button-link href="/app/login">
+        <svg class="icon">
+          <use href="/icons/nutrition.svg#icon-profile" />
+        </svg>
+        Sign In
+      </mpn-button-link>
+    `;
+  }
+
   renderNavButtons() {
     return html`
       <nav>
         <ul class="row">
-          <li>
+          ${!this.hideBack ? html`<li>${this.renderBackButton()}</li>` : html`<li>
             ${this.loggedIn
-              ? html`${this.renderProfileButton()} ${this.renderSignOutButton()}`
+              ? this.renderProfileButton()
               : this.renderSignInButton()}
-          </li>
+          </li>`}
           <li>
-            <a href="/app/discover/recipes" class="button-link">
+            <mpn-button-link href="/app/discover/recipes">
               <svg class="icon">
                 <use href="/icons/nutrition.svg#icon-cookbook" />
               </svg>
               Browse Shared Recipes
-            </a>
+            </mpn-button-link>
           </li>
           <li>
-            <a href="/app/discover/plans" class="button-link">
+            <mpn-button-link href="/app/discover/plans">
               <svg class="icon">
                 <use href="/icons/nutrition.svg#icon-meal-plan" />
               </svg>
               Browse Shared Meal Plans
-            </a>
+            </mpn-button-link>
           </li>
         </ul>
       </nav>
@@ -160,12 +160,12 @@ export class PageHeaderElement extends LitElement {
   renderBackButton() {
     return html`
       <nav>
-        <a href="${this.href}" class="button-link">
-          <svg class="icon">
-            <use href="/icons/nutrition.svg#${this.icon}"></use>
-          </svg>
+        <button class="button-link" @click=${() => history.back()}>
+        <svg class="icon">
+          <use href="/icons/nutrition.svg#icon-back">
+        </svg>
           ${this.label}
-        </a>
+        </button>
       </nav>
     `;
   }
@@ -191,7 +191,7 @@ export class PageHeaderElement extends LitElement {
             Dark Mode
           </label>
         </div>
-        ${this.href ? this.renderBackButton() : this.renderNavButtons()}
+        ${this.renderNavButtons()}
       </header>
     `;
   }

@@ -1,11 +1,13 @@
 import bcrypt from "bcryptjs";
 import { Schema, model } from "mongoose";
 import { Credential } from "../models/credential";
+import Users from "./UserService";
 
 const credentialSchema = new Schema<Credential>(
   {
-    username: { type: String, required: true, trim: true },
-    hashedPassword: { type: String, required: true }
+    username: { type: String, required: true, trim: true, unique: true },
+    hashedPassword: { type: String, required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true, unique: true }
   },
   { collection: "user_credentials" }
 );
@@ -13,7 +15,7 @@ const credentialSchema = new Schema<Credential>(
 const credentialModel = model<Credential>("Credential", credentialSchema);
 
 // Create new credential
-function create(username: string, password: string): Promise<Credential> {
+function create(username: string, password: string, userId: string): Promise<Credential> {
   return credentialModel
     .find({ username })
     .then((found) => {
@@ -24,14 +26,15 @@ function create(username: string, password: string): Promise<Credential> {
         .genSalt(10)
         .then((salt) => bcrypt.hash(password, salt))
         .then((hashedPassword) => {
-          const creds = new credentialModel({ username, hashedPassword });
+          const creds = new credentialModel({ username, hashedPassword, userId });
           return creds.save();
         })
     );
 }
 
+
 // Verify login credentials
-function verify(username: string, password: string): Promise<string> {
+function verify(username: string, password: string): Promise<Credential> {
   return credentialModel
     .find({ username })
     .then((found) => {
@@ -41,7 +44,7 @@ function verify(username: string, password: string): Promise<string> {
     .then((credsOnFile) =>
       bcrypt.compare(password, credsOnFile.hashedPassword).then((result) => {
         if (!result) throw "Invalid username or password";
-        return credsOnFile.username;
+        return credsOnFile;
       })
     );
 }

@@ -41,6 +41,10 @@ router.get("/:id", (req, res) => {
   const { id } = req.params;
   import_UserService.default.get(id).then((user) => res.json(user)).catch((err) => res.status(404).send(err));
 });
+router.get("/username/:username", (req, res) => {
+  const { username } = req.params;
+  import_UserService.default.getByUsername(username).then((user) => res.json(user)).catch((err) => res.status(404).send({ error: err }));
+});
 router.post("/", (req, res) => {
   const newUser = req.body;
   import_UserService.default.create(newUser).then((created) => res.status(201).json(created)).catch((err) => res.status(500).send(err));

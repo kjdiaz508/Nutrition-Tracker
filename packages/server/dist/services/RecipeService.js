@@ -1,9 +1,7 @@
 "use strict";
-var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
@@ -17,21 +15,13 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var RecipeService_exports = {};
 __export(RecipeService_exports, {
   default: () => RecipeService_default
 });
 module.exports = __toCommonJS(RecipeService_exports);
-var import_mongoose = __toESM(require("mongoose"));
+var import_mongoose = require("mongoose");
 const IngredientSchema = new import_mongoose.Schema({
   name: { type: String, required: true, trim: true },
   unit: { type: String, required: true, trim: true },
@@ -43,18 +33,24 @@ const IngredientSchema = new import_mongoose.Schema({
 }, { _id: false });
 const RecipeSchema = new import_mongoose.Schema({
   name: { type: String, required: true, trim: true },
-  owner: { type: import_mongoose.default.Schema.Types.ObjectId, required: true, ref: "User" },
+  owner: { type: String, required: true, ref: "User" },
   public: { type: Boolean, required: true },
-  href: { type: String },
   ingredients: [IngredientSchema]
 }, { collection: "recipes" });
 const RecipeModel = (0, import_mongoose.model)("Recipe", RecipeSchema);
-function index() {
-  return RecipeModel.find();
+function getPublic() {
+  return RecipeModel.find({ public: true });
 }
-function get(id) {
+function getByUsername(username) {
+  return RecipeModel.find({ owner: username });
+}
+function getAccessibleByUsername(username) {
+  return RecipeModel.find({ $or: [{ public: true }, { owner: username }] });
+}
+function getIfAuthorized(id, username) {
   return RecipeModel.findById(id).then((recipe) => {
     if (!recipe) throw `${id} not found`;
+    if (!recipe.public && recipe.owner !== username) throw `Unauthorized access to ${id}`;
     return recipe;
   });
 }
@@ -62,15 +58,27 @@ function create(json) {
   const newRecipe = new RecipeModel(json);
   return newRecipe.save();
 }
-function update(id, json) {
-  return RecipeModel.findByIdAndUpdate(id, json, { new: true }).then((updated) => {
-    if (!updated) throw `${id} not updated`;
-    return updated;
+async function update(id, json, username) {
+  const recipe = await RecipeModel.findById(id);
+  if (!recipe) throw `${id} not found`;
+  if (recipe.owner !== username) throw `Unauthorized`;
+  return RecipeModel.findByIdAndUpdate(id, json, { new: true }).then((r) => {
+    if (!r) throw `${id} not updated`;
+    return r;
   });
 }
-function remove(id) {
-  return RecipeModel.findByIdAndDelete(id).then((deleted) => {
-    if (!deleted) throw `${id} not deleted`;
-  });
+async function remove(id, username) {
+  const recipe = await RecipeModel.findById(id);
+  if (!recipe) throw `${id} not found`;
+  if (recipe.owner !== username) throw `Unauthorized`;
+  await RecipeModel.findByIdAndDelete(id);
 }
-var RecipeService_default = { index, get, create, update, remove };
+var RecipeService_default = {
+  getPublic,
+  getByUsername,
+  getAccessibleByUsername,
+  getIfAuthorized,
+  create,
+  update,
+  remove
+};

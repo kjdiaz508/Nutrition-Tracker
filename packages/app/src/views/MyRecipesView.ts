@@ -1,11 +1,11 @@
 import { css, html, LitElement } from "lit";
 import reset from "../styles/reset.css";
 import { state } from "lit/decorators.js";
-import { MealPlan } from "../types";
+import { Recipe } from "../types";
 import { Auth, Observer } from "@calpoly/mustang";
 
-export class SharedPlansView extends LitElement {
-  @state() mealPlans?: MealPlan[];
+export class MyRecipesView extends LitElement {
+  @state() recipes?: Recipe[];
 
   static styles = [
     reset.styles,
@@ -40,46 +40,50 @@ export class SharedPlansView extends LitElement {
   }
 
   async hydrate() {
-    fetch("/api/mealplans/public", { headers: this.authorization })
+    fetch("/api/recipes/private", { headers: this.authorization })
       .then((res) => res.json())
       .then((data) => {
-        this.mealPlans = data;
+        this.recipes = data;
       })
-      .catch((err) => console.error("Error fetching meal plan:", err));
+      .catch((err) => console.error("Error fetching personal recipes:", err));
   }
 
-  renderPlanList() {
-    if (!this.mealPlans) {
-      return html`Loading meal plans...`;
+  renderRecipeList() {
+    if (!this.recipes) {
+      return html`Loading your recipes...`;
     }
     return html`
       <ul>
-        ${this.mealPlans?.map((mealPlan) => {
+        ${this.recipes.map((recipe) => {
           return html`
             <li>
               <mpn-card>
-                <a href="/app/discover/plans/${mealPlan._id}">
+                <a href="/app/my-recipes/${recipe._id}">
                   <svg class="icon">
-                    <use href="/icons/nutrition.svg#icon-meal-plan"></use>
+                    <use href="/icons/nutrition.svg#icon-recipe"></use>
                   </svg>
-                  ${mealPlan.name}
+                  ${recipe.name}
                 </a>
               </mpn-card>
             </li>
-          `
+          `;
         })}
       </ul>
-    `
+    `;
   }
 
   render() {
     return html`
-      <mpn-header
-          title="Public Meal Plan Library"
-      ></mpn-header>
+      <mpn-header title="My Recipes"></mpn-header>
       <mpn-main-grid>
         <section class="col-span-12">
-          ${this.renderPlanList()}
+          ${this.renderRecipeList()}
+        </section>
+
+        <section class="col-span-12">
+          <mpn-button-link href="/app/my-recipes/create">
+            Create New Recipe
+          </mpn-button-link>
         </section>
       </mpn-main-grid>
     `;

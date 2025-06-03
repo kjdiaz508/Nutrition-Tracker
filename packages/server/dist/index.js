@@ -24,6 +24,8 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var import_express = __toESM(require("express"));
 var import_mongo = require("./services/mongo");
 var import_auth = __toESM(require("./routes/auth"));
+var import_promises = __toESM(require("node:fs/promises"));
+var import_path = __toESM(require("path"));
 var import_mealplans = __toESM(require("./routes/mealplans"));
 var import_recipes = __toESM(require("./routes/recipes"));
 var import_users = __toESM(require("./routes/users"));
@@ -37,6 +39,12 @@ app.use("/auth", import_auth.default);
 app.use("/api/mealplans", import_auth.authenticateUser, import_mealplans.default);
 app.use("/api/recipes", import_auth.authenticateUser, import_recipes.default);
 app.use("/api/users", import_auth.authenticateUser, import_users.default);
+app.use("/app", (req, res) => {
+  const indexHtml = import_path.default.resolve(staticDir, "index.html");
+  import_promises.default.readFile(indexHtml, { encoding: "utf8" }).then(
+    (html) => res.send(html)
+  );
+});
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

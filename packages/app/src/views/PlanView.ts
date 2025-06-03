@@ -1,38 +1,8 @@
-import { html, css, LitElement } from "lit";
+import { html, LitElement } from "lit";
 import { property, state } from "lit/decorators.js";
 import reset from "../styles/reset.css";
 import { Auth, Observer } from "@calpoly/mustang";
-
-interface Ingredient {
-  name: string;
-  unit: string;
-  amount: number;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-}
-
-interface Recipe {
-  _id: string;
-  name: string;
-  href: string;
-  ingredients: Ingredient[];
-  steps: string[];
-}
-
-interface MealDay {
-  weekday: string;
-  recipes: Recipe[];
-}
-
-interface MealPlan {
-  _id: string;
-  name: string;
-  owner: string;
-  public: boolean;
-  days: MealDay[];
-}
+import { MealPlan } from "../types";
 
 export class PlanView extends LitElement {
   @property({ type: String }) id = "";
@@ -44,7 +14,7 @@ export class PlanView extends LitElement {
   _user?: Auth.User;
 
   get src() {
-    return `/api/mealplans/${this.id}`
+    return `/api/mealplans/${this.id}`;
   }
 
   connectedCallback() {
@@ -74,25 +44,11 @@ export class PlanView extends LitElement {
 
   render() {
     return html`
-      <mpn-header
-        title=${this.mealPlan?.name}
-        href="/app/discover/plans"
-        icon="icon-meal-plan"
-        label="← Back to Shared Meal Plans"
-      ></mpn-header>
+      <mpn-header title=${this.mealPlan?.name}></mpn-header>
 
       <mpn-main-grid>
         <section class="col-span-12">
           <mpn-meal-plan .mealPlan=${this.mealPlan}></mpn-meal-plan>
-        </section>
-
-        <section class="col-span-12">
-          <mpn-button-link href="/app/shopping-list">
-            <svg class="icon">
-              <use href="/icons/nutrition.svg#icon-grocery-bag" />
-            </svg>
-            View Shopping List
-          </mpn-button-link>
         </section>
       </mpn-main-grid>
     `;

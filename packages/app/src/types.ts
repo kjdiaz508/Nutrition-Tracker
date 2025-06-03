@@ -11,7 +11,6 @@ export interface Ingredient {
 export interface Recipe {
   _id: string;
   name: string;
-  href: string;
   ingredients: Ingredient[];
   steps: string[];
 }
@@ -27,4 +26,24 @@ export interface MealPlan {
   owner: string;
   public: boolean;
   days: MealDay[];
+}
+
+export interface MealPlanPreview {
+  _id: string;
+  name: string;
+}
+
+export interface RecipePreview {
+  _id: string;
+  name: string;
+}
+
+export interface User {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  currentMealPlan?: MealPlan;
+  mealPlans: MealPlanPreview[];
+  recipes: RecipePreview[];
 }

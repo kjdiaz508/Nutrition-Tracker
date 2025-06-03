@@ -12,6 +12,13 @@ import { MealPlanElement } from "./components/MealPlan";
 import { MealDayElement } from "./components/MealDay";
 import { RecipeLinkElement } from "./components/RecipeLink";
 import { SharedPlansView } from "./views/SharedPlansView";
+import { ProfileView } from "./views/ProfileView";
+import { SharedRecipesView } from "./views/SharedRecipesView";
+import { SignupView } from "./views/SignupView";
+import { RecipeView } from "./views/RecipeView";
+import { RecipeDetailsElement } from "./components/RecipeDetails";
+import { MyPlansView } from "./views/MyPlansView";
+import { MyRecipesView } from "./views/MyRecipesView";
 
 const routes = [
   {
@@ -79,8 +86,12 @@ const routes = [
     `,
   },
   {
-    path: "/app/create",
-    view: () => html`<create-view></create-view>`,
+    path: "/app/my-plans/create",
+    view: () => html`<create-plan-view></create-plan-view>`,
+  },
+  {
+    path: "/app/my-recipes/create",
+    view: () => html`<create-recipe-view></create-plan-view>`,
   },
 ];
 
@@ -95,11 +106,18 @@ define({
   "mpn-meal-day": MealDayElement,
   "mpn-recipe-link": RecipeLinkElement,
   "login-form": LoginFormElement,
+  "mpn-recipe-details": RecipeDetailsElement,
 
   "home-view": HomeView,
   "login-view": LoginView,
   "plan-view": PlanView,
   "shared-plans-view": SharedPlansView,
+  "profile-view": ProfileView,
+  "shared-recipes-view": SharedRecipesView,
+  "signup-view": SignupView,
+  "recipe-view": RecipeView,
+  "my-plans-view": MyPlansView,
+  "my-recipes-view": MyRecipesView,
 
   "mu-switch": class AppSwitch extends Switch.Element {
     constructor() {

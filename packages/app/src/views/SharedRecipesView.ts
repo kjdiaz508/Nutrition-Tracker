@@ -1,11 +1,11 @@
 import { css, html, LitElement } from "lit";
 import reset from "../styles/reset.css";
 import { state } from "lit/decorators.js";
-import { MealPlan } from "../types";
+import { Recipe } from "../types";
 import { Auth, Observer } from "@calpoly/mustang";
 
-export class SharedPlansView extends LitElement {
-  @state() mealPlans?: MealPlan[];
+export class SharedRecipesView extends LitElement {
+  @state() recipes?: Recipe[];
 
   static styles = [
     reset.styles,
@@ -32,54 +32,53 @@ export class SharedPlansView extends LitElement {
   }
 
   get authorization(): { Authorization?: string } {
-    if (this._user && this._user.authenticated)
+    if (this._user && this._user.authenticated) {
       return {
         Authorization: `Bearer ${(this._user as Auth.AuthenticatedUser).token}`,
       };
-    else return {};
+    }
+    return {};
   }
 
   async hydrate() {
-    fetch("/api/mealplans/public", { headers: this.authorization })
+    fetch("/api/recipes/public", { headers: this.authorization })
       .then((res) => res.json())
       .then((data) => {
-        this.mealPlans = data;
+        this.recipes = data;
       })
-      .catch((err) => console.error("Error fetching meal plan:", err));
+      .catch((err) => console.error("Error fetching recipes:", err));
   }
 
-  renderPlanList() {
-    if (!this.mealPlans) {
-      return html`Loading meal plans...`;
+  renderRecipeList() {
+    if (!this.recipes) {
+      return html`Loading recipes...`;
     }
     return html`
       <ul>
-        ${this.mealPlans?.map((mealPlan) => {
+        ${this.recipes.map((recipe) => {
           return html`
             <li>
               <mpn-card>
-                <a href="/app/discover/plans/${mealPlan._id}">
+                <a href="/app/discover/recipes/${recipe._id}">
                   <svg class="icon">
-                    <use href="/icons/nutrition.svg#icon-meal-plan"></use>
+                    <use href="/icons/nutrition.svg#icon-cookbook"></use>
                   </svg>
-                  ${mealPlan.name}
+                  ${recipe.name}
                 </a>
               </mpn-card>
             </li>
-          `
+          `;
         })}
       </ul>
-    `
+    `;
   }
 
   render() {
     return html`
-      <mpn-header
-          title="Public Meal Plan Library"
-      ></mpn-header>
+      <mpn-header title="Public Recipe Library"></mpn-header>
       <mpn-main-grid>
         <section class="col-span-12">
-          ${this.renderPlanList()}
+          ${this.renderRecipeList()}
         </section>
       </mpn-main-grid>
     `;

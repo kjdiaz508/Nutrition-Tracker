@@ -36,10 +36,10 @@ const UserSchema = new import_mongoose.Schema(
   {
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
-    username: { type: String, required: true, trim: true },
+    username: { type: String, required: true, trim: true, unique: true },
     currentMealPlan: { type: import_mongoose.default.Schema.Types.ObjectId, ref: "MealPlan" },
     mealPlans: [{ type: import_mongoose.default.Schema.Types.ObjectId, ref: "MealPlan" }],
-    recipes: [{ type: import_mongoose.default.Schema.Types.ObjectId, ref: "recipes" }]
+    recipes: [{ type: import_mongoose.default.Schema.Types.ObjectId, ref: "Recipe" }]
   },
   { collection: "users" }
 );
@@ -48,8 +48,14 @@ function index() {
   return UserModel.find().populate("mealPlans", "_id name").populate("recipes", "_id name");
 }
 function get(id) {
-  return UserModel.findById(id).populate("mealPlans", "_id name").populate("recipes", "_id name").then((user) => {
+  return UserModel.findById(id).populate("mealPlans", "_id name").populate("recipes", "_id name").populate("currentMealPlan").then((user) => {
     if (!user) throw `${id} not found`;
+    return user;
+  });
+}
+function getByUsername(username) {
+  return UserModel.findOne({ username }).populate("mealPlans", "_id name").populate("recipes", "_id name").populate("currentMealPlan").then((user) => {
+    if (!user) throw `${username} not found`;
     return user;
   });
 }
@@ -70,4 +76,4 @@ function remove(id) {
     if (!deleted) throw `${id} not deleted`;
   });
 }
-var UserService_default = { index, get, create, update, remove };
+var UserService_default = { index, get, getByUsername, create, update, remove };

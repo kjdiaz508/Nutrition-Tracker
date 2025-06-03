@@ -18,7 +18,7 @@ export class LoginView extends LitElement {
 
   render() {
     return html`
-      <mpn-header title="Log In or Sign Up" href="/"></mpn-header>
+      <mpn-header title="Log In or Sign Up"></mpn-header>
       <mpn-main-grid>
         <mpn-card class="col-span-12 center-content">
             <div class="sequence">

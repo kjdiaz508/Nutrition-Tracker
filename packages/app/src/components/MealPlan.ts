@@ -1,5 +1,5 @@
 import { LitElement, html } from "lit";
-import { property, state } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 import reset from "../styles/reset.css";
 
 
@@ -79,7 +79,7 @@ export class MealPlanElement extends LitElement {
               ${day.recipes.map(
                 (recipe) => html`
                   <mpn-recipe-link
-                    href=${recipe.href}
+                    href="/app/discover/recipes/${recipe._id}"
                     title=${recipe.name}
                   ></mpn-recipe-link>
                 `

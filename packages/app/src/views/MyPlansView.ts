@@ -4,7 +4,7 @@ import { state } from "lit/decorators.js";
 import { MealPlan } from "../types";
 import { Auth, Observer } from "@calpoly/mustang";
 
-export class SharedPlansView extends LitElement {
+export class MyPlansView extends LitElement {
   @state() mealPlans?: MealPlan[];
 
   static styles = [
@@ -40,25 +40,25 @@ export class SharedPlansView extends LitElement {
   }
 
   async hydrate() {
-    fetch("/api/mealplans/public", { headers: this.authorization })
+    fetch("/api/mealplans/private", { headers: this.authorization })
       .then((res) => res.json())
       .then((data) => {
         this.mealPlans = data;
       })
-      .catch((err) => console.error("Error fetching meal plan:", err));
+      .catch((err) => console.error("Error fetching personal meal plans:", err));
   }
 
   renderPlanList() {
     if (!this.mealPlans) {
-      return html`Loading meal plans...`;
+      return html`Loading your meal plans...`;
     }
     return html`
       <ul>
-        ${this.mealPlans?.map((mealPlan) => {
+        ${this.mealPlans.map((mealPlan) => {
           return html`
             <li>
               <mpn-card>
-                <a href="/app/discover/plans/${mealPlan._id}">
+                <a href="/app/my-plans/${mealPlan._id}">
                   <svg class="icon">
                     <use href="/icons/nutrition.svg#icon-meal-plan"></use>
                   </svg>
@@ -66,20 +66,25 @@ export class SharedPlansView extends LitElement {
                 </a>
               </mpn-card>
             </li>
-          `
+          `;
         })}
       </ul>
-    `
+    `;
   }
 
   render() {
     return html`
-      <mpn-header
-          title="Public Meal Plan Library"
-      ></mpn-header>
+      <mpn-header title="My Meal Plans"></mpn-header>
       <mpn-main-grid>
         <section class="col-span-12">
           ${this.renderPlanList()}
+        </section>
+      </mpn-main-grid>
+
+       <section class="col-span-12">
+          <mpn-button-link href="/app/my-plans/create">
+            Create New Plan
+          </mpn-button-link>
         </section>
       </mpn-main-grid>
     `;

@@ -18,6 +18,14 @@ router.get("/:id", (req: Request, res: Response) => {
     .catch((err) => res.status(404).send(err));
 });
 
+router.get("/username/:username", (req: Request, res: Response) => {
+  const { username } = req.params;
+
+  Users.getByUsername(username)
+    .then((user: User) => res.json(user))
+    .catch((err) => res.status(404).send({ error: err }));
+});
+
 router.post("/", (req: Request, res: Response) => {
   const newUser = req.body;
 

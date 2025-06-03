@@ -36,6 +36,7 @@ var import_dotenv = __toESM(require("dotenv"));
 var import_express = __toESM(require("express"));
 var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
 var import_CredentialService = __toESM(require("../services/CredentialService"));
+var import_UserService = __toESM(require("../services/UserService"));
 const router = import_express.default.Router();
 import_dotenv.default.config();
 const TOKEN_SECRET = process.env.TOKEN_SECRET || "NOT_A_SECRET";
@@ -57,7 +58,22 @@ router.post("/register", (req, res) => {
   if (typeof username !== "string" || typeof password !== "string") {
     res.status(400).send("Bad request: Invalid input data.");
   } else {
-    import_CredentialService.default.create(username, password).then((creds) => generateAccessToken(creds.username)).then((token) => res.status(201).send({ token })).catch((err) => res.status(409).send({ error: err.message }));
+    import_UserService.default.create({
+      username,
+      firstName: "New",
+      lastName: "User",
+      mealPlans: [],
+      recipes: []
+    }).then(
+      (newUser) => import_CredentialService.default.create(newUser.username, password, newUser._id.toString()).then(
+        (creds) => (
+          // Step 3: Generate token including userId
+          generateAccessToken(creds.username).then(
+            (token) => res.status(201).send({ token, userId: newUser._id })
+          )
+        )
+      )
+    ).catch((err) => res.status(409).send({ error: err.message }));
   }
 });
 router.post("/login", (req, res) => {
@@ -65,7 +81,11 @@ router.post("/login", (req, res) => {
   if (!username || !password) {
     res.status(400).send("Bad request: Invalid input data.");
   } else {
-    import_CredentialService.default.verify(username, password).then((goodUser) => generateAccessToken(goodUser)).then((token) => res.status(200).send({ token })).catch(() => res.status(401).send("Unauthorized"));
+    import_CredentialService.default.verify(username, password).then(
+      (creds) => generateAccessToken(creds.username).then(
+        (token) => res.status(200).send({ token, userId: creds.userId })
+      )
+    ).catch(() => res.status(401).send("Unauthorized"));
   }
 });
 function authenticateUser(req, res, next) {
@@ -75,8 +95,10 @@ function authenticateUser(req, res, next) {
     res.status(401).end();
   } else {
     import_jsonwebtoken.default.verify(token, TOKEN_SECRET, (error, decoded) => {
-      if (decoded) next();
-      else res.status(403).end();
+      if (decoded) {
+        req.user = decoded;
+        next();
+      } else res.status(403).end();
     });
   }
 }

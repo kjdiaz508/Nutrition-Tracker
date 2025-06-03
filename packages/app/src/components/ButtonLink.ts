@@ -9,7 +9,10 @@ export class ButtonLinkElement extends LitElement {
     reset.styles,
     css`
       a {
-        display: inline-block;
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
         background-color: var(--color-accent);
         color: white;
         padding: var(--space-sm) var(--space-md);
