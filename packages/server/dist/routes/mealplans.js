@@ -32,26 +32,43 @@ __export(mealplans_exports, {
 });
 module.exports = __toCommonJS(mealplans_exports);
 var import_express = __toESM(require("express"));
+var import_auth = require("./auth");
 var import_MealPlanService = __toESM(require("../services/MealPlanService"));
 const router = import_express.default.Router();
-router.get("/", (_, res) => {
-  import_MealPlanService.default.index().then((list) => res.json(list)).catch((err) => res.status(500).send(err));
+router.get("/public", (_, res) => {
+  import_MealPlanService.default.getPublic().then((plans) => res.json(plans)).catch((err) => res.status(500).send(err));
 });
-router.get("/:id", (req, res) => {
+router.get("/private", import_auth.authenticateUser, (req, res) => {
+  const username = req.user?.username;
+  import_MealPlanService.default.getByUsername(username).then((plans) => res.json(plans)).catch((err) => res.status(500).send(err));
+});
+router.get("/", import_auth.authenticateUser, (req, res) => {
+  const username = req.user?.username;
+  import_MealPlanService.default.getAccessibleByUsername(username).then((plans) => res.json(plans)).catch((err) => res.status(500).send(err));
+});
+router.get("/:id", import_auth.authenticateUser, (req, res) => {
   const { id } = req.params;
-  import_MealPlanService.default.get(id).then((mealplan) => res.json(mealplan)).catch((err) => res.status(404).send(err));
+  if (!req.user?.username) res.status(401).send("Unauthorized");
+  const username = req.user.username;
+  import_MealPlanService.default.getIfAuthorized(id, username).then((plan) => res.json(plan)).catch((err) => res.status(403).send(err));
 });
-router.post("/", (req, res) => {
-  const newMealPlan = req.body;
-  import_MealPlanService.default.create(newMealPlan).then((created) => res.status(201).json(created)).catch((err) => res.status(500).send(err));
+router.post("/", import_auth.authenticateUser, (req, res) => {
+  const newPlan = req.body;
+  if (!req.user?.username) res.status(401).send("Unauthorized");
+  newPlan.owner = req.user?.username;
+  import_MealPlanService.default.create(newPlan).then((created) => res.status(201).json(created)).catch((err) => res.status(500).send(err));
 });
-router.put("/:id", (req, res) => {
+router.put("/:id", import_auth.authenticateUser, (req, res) => {
   const { id } = req.params;
   const updateData = req.body;
-  import_MealPlanService.default.update(id, updateData).then((updated) => res.json(updated)).catch((err) => res.status(404).send(err));
+  if (!req.user?.username) res.status(401).send("Unauthorized");
+  const username = req.user?.username;
+  import_MealPlanService.default.update(id, updateData, username).then((updated) => res.json(updated)).catch((err) => res.status(404).send(err));
 });
-router.delete("/:id", (req, res) => {
+router.delete("/:id", import_auth.authenticateUser, (req, res) => {
   const { id } = req.params;
-  import_MealPlanService.default.remove(id).then(() => res.status(204).end()).catch((err) => res.status(404).send(err));
+  if (!req.user?.username) res.status(401).send("Unauthorized");
+  const username = req.user?.username;
+  import_MealPlanService.default.remove(id, username).then(() => res.status(204).end()).catch((err) => res.status(404).send(err));
 });
 var mealplans_default = router;

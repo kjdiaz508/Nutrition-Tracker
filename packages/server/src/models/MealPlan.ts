@@ -7,7 +7,7 @@ export interface Day extends Document {
 
 export interface MealPlan extends Document {
   name: string;
-  owner: mongoose.Types.ObjectId;
+  owner: string;
   public: boolean;
   days: Day[];
 }

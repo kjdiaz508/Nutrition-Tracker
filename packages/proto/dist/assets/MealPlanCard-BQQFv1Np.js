@@ -1,4 +1,4 @@
-import{i as l,r as f,b as u,x as h,n as c}from"./PageHeader-B0vX37UT.js";var d=Object.defineProperty,p=(i,o,n,v)=>{for(var r=void 0,s=i.length-1,a;s>=0;s--)(a=i[s])&&(r=a(o,n,r)||r);return r&&d(o,n,r),r};const t=class t extends l{constructor(){super(...arguments),this.title="",this.href=""}render(){return h`
+import{i as l,r as f,b as u,x as h,n as c}from"./PageHeader-B6rjJ5UI.js";var d=Object.defineProperty,p=(i,o,n,v)=>{for(var r=void 0,s=i.length-1,a;s>=0;s--)(a=i[s])&&(r=a(o,n,r)||r);return r&&d(o,n,r),r};const t=class t extends l{constructor(){super(...arguments),this.title="",this.href=""}render(){return h`
       <a href=${this.href}>
         <svg class="icon">
           <use href="/icons/nutrition.svg#icon-meal-plan"></use>

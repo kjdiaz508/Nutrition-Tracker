@@ -1,0 +1,1 @@
+import{d as e,P as a,a as i}from"./PageHeader-B6rjJ5UI.js";import{I as t,R as m}from"./RecipeDetails-DinThVrN.js";e({"mu-auth":i.Provider,"mpn-page-header":a,"mpn-recipe-details":m,"mpn-ingredients-list":t});

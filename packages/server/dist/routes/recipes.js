@@ -32,26 +32,39 @@ __export(recipes_exports, {
 });
 module.exports = __toCommonJS(recipes_exports);
 var import_express = __toESM(require("express"));
+var import_auth = require("./auth");
 var import_RecipeService = __toESM(require("../services/RecipeService"));
 const router = import_express.default.Router();
-router.get("/", (_, res) => {
-  import_RecipeService.default.index().then((list) => res.json(list)).catch((err) => res.status(500).send(err));
+router.get("/public", (_, res) => {
+  import_RecipeService.default.getPublic().then((list) => res.json(list)).catch((err) => res.status(500).send(err));
 });
-router.get("/:id", (req, res) => {
+router.get("/private", import_auth.authenticateUser, (req, res) => {
+  const username = req.user?.username;
+  import_RecipeService.default.getByUsername(username).then((list) => res.json(list)).catch((err) => res.status(500).send(err));
+});
+router.get("/", import_auth.authenticateUser, (req, res) => {
+  const username = req.user?.username;
+  import_RecipeService.default.getAccessibleByUsername(username).then((list) => res.json(list)).catch((err) => res.status(500).send(err));
+});
+router.get("/:id", import_auth.authenticateUser, (req, res) => {
   const { id } = req.params;
-  import_RecipeService.default.get(id).then((recipe) => res.json(recipe)).catch((err) => res.status(404).send(err));
+  const username = req.user?.username;
+  import_RecipeService.default.getIfAuthorized(id, username).then((recipe) => res.json(recipe)).catch((err) => res.status(403).send(err));
 });
-router.post("/", (req, res) => {
+router.post("/", import_auth.authenticateUser, (req, res) => {
   const newRecipe = req.body;
+  newRecipe.owner = req.user?.username;
   import_RecipeService.default.create(newRecipe).then((created) => res.status(201).json(created)).catch((err) => res.status(500).send(err));
 });
-router.put("/:id", (req, res) => {
+router.put("/:id", import_auth.authenticateUser, (req, res) => {
   const { id } = req.params;
   const updateData = req.body;
-  import_RecipeService.default.update(id, updateData).then((updated) => res.json(updated)).catch((err) => res.status(404).send(err));
+  const username = req.user?.username;
+  import_RecipeService.default.update(id, updateData, username).then((updated) => res.json(updated)).catch((err) => res.status(404).send(err));
 });
-router.delete("/:id", (req, res) => {
+router.delete("/:id", import_auth.authenticateUser, (req, res) => {
   const { id } = req.params;
-  import_RecipeService.default.remove(id).then(() => res.status(204).end()).catch((err) => res.status(404).send(err));
+  const username = req.user?.username;
+  import_RecipeService.default.remove(id, username).then(() => res.status(204).end()).catch((err) => res.status(404).send(err));
 });
 var recipes_default = router;

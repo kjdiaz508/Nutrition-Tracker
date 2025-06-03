@@ -1,4 +1,4 @@
-import{i as f,x as l,r as u,b as g,n,O as x,c as _,d as P,P as k,a as C}from"./PageHeader-B0vX37UT.js";var O=Object.defineProperty,d=(a,e,r,c)=>{for(var t=void 0,s=a.length-1,i;s>=0;s--)(i=a[s])&&(t=i(e,r,t)||t);return t&&O(e,r,t),t};const m=class m extends f{constructor(){super(...arguments),this.day="",this.calories="",this.protein="",this.carbs="",this.fat=""}render(){return l`
+import{i as f,x as l,r as u,b as g,n,O as x,c as _,d as P,P as k,a as C}from"./PageHeader-B6rjJ5UI.js";var O=Object.defineProperty,d=(a,e,r,c)=>{for(var t=void 0,s=a.length-1,i;s>=0;s--)(i=a[s])&&(t=i(e,r,t)||t);return t&&O(e,r,t),t};const m=class m extends f{constructor(){super(...arguments),this.day="",this.calories="",this.protein="",this.carbs="",this.fat=""}render(){return l`
       <section>
         <h2>${this.day}</h2>
         <div>

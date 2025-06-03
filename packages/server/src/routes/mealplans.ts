@@ -1,45 +1,69 @@
 import express, { Request, Response } from "express";
-import { MealPlan } from "../models/MealPlan";
+import { authenticateUser } from "./auth";
 import MealPlans from "../services/MealPlanService";
 
 const router = express.Router();
 
-router.get("/", (_, res: Response) => {
-  MealPlans.index()
-    .then((list: MealPlan[]) => res.json(list))
+// GET /api/mealplans/public
+router.get("/public", (_, res) => {
+  MealPlans.getPublic()
+    .then((plans) => res.json(plans))
     .catch((err) => res.status(500).send(err));
 });
 
+// GET /api/mealplans/private
+router.get("/private", authenticateUser, (req: any, res) => {
+  const username = req.user?.username;
+  MealPlans.getByUsername(username)
+    .then((plans) => res.json(plans))
+    .catch((err) => res.status(500).send(err));
+});
 
-router.get("/:id", (req: Request, res: Response) => {
+// GET /api/mealplans (all plans accessible to the user)
+router.get("/", authenticateUser, (req: any, res) => {
+  const username = req.user?.username;
+  MealPlans.getAccessibleByUsername(username)
+    .then((plans) => res.json(plans))
+    .catch((err) => res.status(500).send(err));
+});
+
+// GET /api/mealplans/:id (only if user has permission)
+router.get("/:id", authenticateUser, (req: any, res) => {
   const { id } = req.params;
-
-  MealPlans.get(id)
-    .then((mealplan: MealPlan) => res.json(mealplan))
-    .catch((err) => res.status(404).send(err));
+  if (!req.user?.username) res.status(401).send("Unauthorized");
+  const username = req.user.username;
+  MealPlans.getIfAuthorized(id, username)
+    .then((plan) => res.json(plan))
+    .catch((err) => res.status(403).send(err));
 });
 
-router.post("/", (req: Request, res: Response) => {
-  const newMealPlan = req.body;
-
-  MealPlans.create(newMealPlan)
-    .then((created: MealPlan) => res.status(201).json(created))
+// POST /api/mealplans
+router.post("/", authenticateUser, (req: any, res) => {
+  const newPlan = req.body;
+  if (!req.user?.username) res.status(401).send("Unauthorized");
+  newPlan.owner = req.user?.username;
+  MealPlans.create(newPlan)
+    .then((created) => res.status(201).json(created))
     .catch((err) => res.status(500).send(err));
 });
 
-router.put("/:id", (req: Request, res: Response) => {
+// PUT /api/mealplans/:id
+router.put("/:id", authenticateUser, (req: any, res) => {
   const { id } = req.params;
   const updateData = req.body;
-
-  MealPlans.update(id, updateData)
-    .then((updated: MealPlan) => res.json(updated))
+  if (!req.user?.username) res.status(401).send("Unauthorized");
+  const username = req.user?.username;
+  MealPlans.update(id, updateData, username)
+    .then((updated) => res.json(updated))
     .catch((err) => res.status(404).send(err));
 });
 
-router.delete("/:id", (req: Request, res: Response) => {
+// DELETE /api/mealplans/:id
+router.delete("/:id", authenticateUser, (req: any, res) => {
   const { id } = req.params;
-
-  MealPlans.remove(id)
+  if (!req.user?.username) res.status(401).send("Unauthorized");
+  const username = req.user?.username;
+  MealPlans.remove(id, username)
     .then(() => res.status(204).end())
     .catch((err) => res.status(404).send(err));
 });

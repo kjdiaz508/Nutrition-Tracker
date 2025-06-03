@@ -29,8 +29,9 @@ export class PageHeaderElement extends LitElement {
 
     this._authObserver.observe((auth: Auth.Model) => {
       const { user } = auth;
-
+      console.log("user: ", user);
       if (user && user.authenticated) {
+        console.log("authenticated")
         this.loggedIn = true;
         this.userid = user.username;
       } else {
@@ -176,6 +177,7 @@ export class PageHeaderElement extends LitElement {
   }
 
   override render() {
+    console.log("logged in: ", this.loggedIn);
     return html`
       <header>
         <div class="row">

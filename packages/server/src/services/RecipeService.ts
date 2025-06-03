@@ -13,21 +13,29 @@ const IngredientSchema = new Schema<Ingredient>({
 
 const RecipeSchema = new Schema<Recipe>({
     name: { type: String, required: true, trim: true},
-    owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User"},
+    owner: { type: String, required: true, ref: "User"},
     public: { type: Boolean, required: true},
-    href: { type: String },
     ingredients: [IngredientSchema]
 }, { collection: "recipes" });
 
 const RecipeModel = model<Recipe>("Recipe", RecipeSchema);
 
-function index(): Promise<Recipe[]> {
-  return RecipeModel.find();
+function getPublic(): Promise<Recipe[]> {
+  return RecipeModel.find({ public: true });
 }
 
-function get(id: string): Promise<Recipe> {
+function getByUsername(username: string): Promise<Recipe[]> {
+  return RecipeModel.find({ owner: username });
+}
+
+function getAccessibleByUsername(username: string): Promise<Recipe[]> {
+  return RecipeModel.find({ $or: [{ public: true }, { owner: username }] });
+}
+
+function getIfAuthorized(id: string, username: string): Promise<Recipe> {
   return RecipeModel.findById(id).then((recipe) => {
     if (!recipe) throw `${id} not found`;
+    if (!recipe.public && recipe.owner !== username) throw `Unauthorized access to ${id}`;
     return recipe;
   });
 }
@@ -37,18 +45,30 @@ function create(json: Recipe): Promise<Recipe> {
   return newRecipe.save();
 }
 
-function update(id: string, json: Recipe): Promise<Recipe> {
-  return RecipeModel.findByIdAndUpdate(id, json, { new: true }).then((updated) => {
-    if (!updated) throw `${id} not updated`;
-    return updated;
+async function update(id: string, json: Recipe, username: string): Promise<Recipe> {
+  const recipe = await RecipeModel.findById(id);
+  if (!recipe) throw `${id} not found`;
+  if (recipe.owner !== username) throw `Unauthorized`;
+  return RecipeModel.findByIdAndUpdate(id, json, { new: true }).then((r) => {
+    if (!r) throw `${id} not updated`;
+    return r;
   });
 }
 
-function remove(id: string): Promise<void> {
-  return RecipeModel.findByIdAndDelete(id).then((deleted) => {
-    if (!deleted) throw `${id} not deleted`;
-  });
+async function remove(id: string, username: string): Promise<void> {
+  const recipe = await RecipeModel.findById(id);
+  if (!recipe) throw `${id} not found`;
+  if (recipe.owner !== username) throw `Unauthorized`;
+  await RecipeModel.findByIdAndDelete(id);
 }
 
-export default { index, get, create, update, remove };
+export default {
+  getPublic,
+  getByUsername,
+  getAccessibleByUsername,
+  getIfAuthorized,
+  create,
+  update,
+  remove
+};
 

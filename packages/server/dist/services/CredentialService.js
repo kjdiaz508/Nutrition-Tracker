@@ -35,18 +35,19 @@ var import_bcryptjs = __toESM(require("bcryptjs"));
 var import_mongoose = require("mongoose");
 const credentialSchema = new import_mongoose.Schema(
   {
-    username: { type: String, required: true, trim: true },
-    hashedPassword: { type: String, required: true }
+    username: { type: String, required: true, trim: true, unique: true },
+    hashedPassword: { type: String, required: true },
+    userId: { type: import_mongoose.Schema.Types.ObjectId, ref: "User", required: true, unique: true }
   },
   { collection: "user_credentials" }
 );
 const credentialModel = (0, import_mongoose.model)("Credential", credentialSchema);
-function create(username, password) {
+function create(username, password, userId) {
   return credentialModel.find({ username }).then((found) => {
     if (found.length) throw new Error(`Username exists: ${username}`);
   }).then(
     () => import_bcryptjs.default.genSalt(10).then((salt) => import_bcryptjs.default.hash(password, salt)).then((hashedPassword) => {
-      const creds = new credentialModel({ username, hashedPassword });
+      const creds = new credentialModel({ username, hashedPassword, userId });
       return creds.save();
     })
   );
@@ -58,7 +59,7 @@ function verify(username, password) {
   }).then(
     (credsOnFile) => import_bcryptjs.default.compare(password, credsOnFile.hashedPassword).then((result) => {
       if (!result) throw "Invalid username or password";
-      return credsOnFile.username;
+      return credsOnFile;
     })
   );
 }

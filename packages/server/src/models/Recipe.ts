@@ -12,9 +12,8 @@ export interface Ingredient extends Document {
 
 export interface Recipe extends Document {
     name: string;
-    owner: mongoose.Types.ObjectId;
+    owner: string;
     public: boolean;
-    href?: string; // get rid of this later
     ingredients: Ingredient[];
     steps: string[];
 }

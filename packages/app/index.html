@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Meal Prep & Nutrition Organizer</title>
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/tokens.css" />
+    <link rel="stylesheet" href="/styles/page.css" />
+    <link rel="stylesheet" href="/styles/background.css" />
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <div>
+      <div class="grid-lines-container">
+        <div class="grid-lines"></div>
+      </div>
+      <div class="vignette"></div>
+    </div>
+    <mu-history provides="mpn:history">
+      <mu-auth provides="mpn:auth">
+        <div class="container">
+          <mu-switch></mu-switch>
+        </div>
+      </mu-auth>
+    </mu-history>
+  </body>
+</html>

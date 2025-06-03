@@ -43,9 +43,8 @@ const MealPlanSchema = new import_mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
     owner: {
-      type: import_mongoose.default.Schema.Types.ObjectId,
-      required: true,
-      ref: "User"
+      type: String,
+      required: true
     },
     public: { type: Boolean, required: true },
     days: { type: [DaySchema], default: [] }
@@ -56,7 +55,10 @@ const MealPlanSchema = new import_mongoose.Schema(
 );
 const MealPlanModel = (0, import_mongoose.model)("MealPlan", MealPlanSchema);
 function index() {
-  return MealPlanModel.find().populate("days.recipes");
+  return MealPlanModel.find().populate("days.recipes").then((mps) => {
+    console.log(mps);
+    return mps;
+  });
 }
 function get(id) {
   return MealPlanModel.findById(id).populate("days.recipes").then((mp) => {
@@ -68,17 +70,50 @@ function create(json) {
   const newMP = new MealPlanModel(json);
   return newMP.save();
 }
-function update(id, json) {
-  return MealPlanModel.findByIdAndUpdate(id, json, { new: true }).then(
-    (updated) => {
-      if (!updated) throw `${id} not updated`;
-      return updated;
-    }
-  );
-}
-function remove(id) {
-  return MealPlanModel.findByIdAndDelete(id).then((deleted) => {
-    if (!deleted) throw `${id} not deleted`;
+async function update(id, json, username) {
+  const plan = await MealPlanModel.findById(id);
+  if (!plan) throw `${id} not found`;
+  if (plan.owner !== username) throw `Unauthorized`;
+  return MealPlanModel.findByIdAndUpdate(id, json, { new: true }).then((updated) => {
+    if (!updated) throw `${id} not updated`;
+    return updated;
   });
 }
-var MealPlanService_default = { index, get, create, update, remove };
+async function remove(id, username) {
+  const plan = await MealPlanModel.findById(id);
+  if (!plan) throw `${id} not found`;
+  if (plan.owner !== username) throw `Unauthorized`;
+  await MealPlanModel.findByIdAndDelete(id);
+}
+function getPublic() {
+  return MealPlanModel.find({ public: true }).populate("days.recipes");
+}
+function getByUsername(username) {
+  return MealPlanModel.find().populate("days.recipes").then((plans) => plans.filter((p) => p.owner === username));
+}
+function getAccessibleByUsername(username) {
+  return MealPlanModel.find().populate("days.recipes").then(
+    (plans) => plans.filter(
+      (p) => p.public || p.owner === username
+    )
+  );
+}
+function getIfAuthorized(id, username) {
+  return MealPlanModel.findById(id).populate("days.recipes").then((plan) => {
+    if (!plan) throw `${id} not found`;
+    if (!plan.public && plan.owner !== username)
+      throw `Unauthorized access to ${id}`;
+    return plan;
+  });
+}
+var MealPlanService_default = {
+  index,
+  get,
+  create,
+  update,
+  remove,
+  getPublic,
+  getByUsername,
+  getAccessibleByUsername,
+  getIfAuthorized
+};
