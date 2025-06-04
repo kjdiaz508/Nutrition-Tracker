@@ -1,11 +1,21 @@
-import { css, html, LitElement } from "lit";
+import { css, html } from "lit";
 import { state } from "lit/decorators.js";
 import reset from "../styles/reset.css";
-import { Auth, Observer, Events } from "@calpoly/mustang";
+import { Events, View } from "@calpoly/mustang";
 import { User } from "../types";
+import { Msg } from "../messages";
+import { Model } from "../model";
+import { UserUpdate } from "../types";
 
-export class ProfileView extends LitElement {
-  @state() user?: User;
+export class ProfileView extends View<Model, Msg> {
+  @state()
+  get user(): User | undefined {
+    return this.model.profile;
+  }
+
+  constructor() {
+    super("mpn:model");
+  }
 
   static styles = [
     reset.styles,
@@ -55,7 +65,6 @@ export class ProfileView extends LitElement {
       button:hover {
         background-color: #c75c1d;
       }
-
       .signout-container {
         display: flex;
         justify-content: center;
@@ -64,36 +73,10 @@ export class ProfileView extends LitElement {
     `,
   ];
 
-  _authObserver = new Observer<Auth.Model>(this, "mpn:auth");
-  _user?: Auth.AuthenticatedUser;
-
   connectedCallback() {
     super.connectedCallback();
-    this._authObserver.observe((auth: Auth.Model) => {
-      if (auth.user?.authenticated) {
-        this._user = auth.user as Auth.AuthenticatedUser;
-        this.hydrate();
-      }
-    });
-  }
-
-  get authorization(): { Authorization?: string } {
-    return this._user?.authenticated
-      ? { Authorization: `Bearer ${this._user.token}` }
-      : {};
-  }
-
-  async hydrate() {
-    try {
-      const res = await fetch(`/api/users/username/${this._user!.username}`, {
-        headers: this.authorization,
-      });
-      const data = await res.json();
-      console.log("bleh:", data);
-      this.user = data;
-    } catch (err) {
-      console.error("Failed to fetch profile:", err);
-    }
+    // username here doesn't actually matter
+    this.dispatchMessage(["profile/get", { username: "bleh" }]);
   }
 
   async setAsCurrent(mealPlanId: string) {
@@ -102,30 +85,16 @@ export class ProfileView extends LitElement {
     const confirmed = confirm("Set this meal plan as your current one?");
     if (!confirmed) return;
 
-    const updated = { ...this.user, currentMealPlan: mealPlanId };
+    const updated: UserUpdate = {
+      currentMealPlan: mealPlanId
+    };
 
-    try {
-      const res = await fetch(`/api/users/${this.user._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          ...this.authorization,
-        },
-        body: JSON.stringify(updated),
-      });
-
-      if (!res.ok) throw new Error("Failed to update user");
-
-      const newUser = await res.json();
-      this.user = newUser;
-    } catch (err) {
-      console.error("Error setting current meal plan:", err);
-    }
+    this.dispatchMessage(["profile/save", { profile: updated }]);
   }
 
   renderMealPlans() {
     if (!this.user?.mealPlans?.length) {
-      return html`<p>You haven’t created any meal plans yet.</p>`;
+      return html`<p>You haven't created any meal plans yet.</p>`;
     }
 
     return html`
@@ -136,11 +105,7 @@ export class ProfileView extends LitElement {
               <span>${plan.name}</span>
               ${this.user?.currentMealPlan?._id === plan._id
                 ? html`<em>(Current)</em>`
-                : html`
-                    <button @click=${() => this.setAsCurrent(plan._id)}>
-                      Set as Current
-                    </button>
-                  `}
+                : html` <button @click=${() => null}>Set as Current</button> `}
             </li>
           `
         )}

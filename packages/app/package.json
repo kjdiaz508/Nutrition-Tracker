@@ -11,5 +11,8 @@
     "start": "http-server dist -p 3000",
     "dev": "npx vite",
     "build": "npx tsc && npx vite build"
+  },
+  "dependencies": {
+    "server": "^1.0.0"
   }
 }

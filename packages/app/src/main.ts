@@ -1,4 +1,4 @@
-import { Auth, define, History, Switch } from "@calpoly/mustang";
+import { Auth, define, History, Switch, Store } from "@calpoly/mustang";
 import { html } from "lit";
 import { PageHeaderElement } from "./components/PageHeader";
 import { CardElement } from "./components/Card";
@@ -19,6 +19,9 @@ import { RecipeView } from "./views/RecipeView";
 import { RecipeDetailsElement } from "./components/RecipeDetails";
 import { MyPlansView } from "./views/MyPlansView";
 import { MyRecipesView } from "./views/MyRecipesView";
+import { Msg } from "./messages";
+import { Model, init } from "./model";
+import update from "./update";
 
 const routes = [
   {
@@ -98,6 +101,13 @@ const routes = [
 define({
   "mu-auth": Auth.Provider,
   "mu-history": History.Provider,
+  "mu-store": class AppStore
+    extends Store.Provider<Model, Msg> {
+      constructor() {
+        super(update, init, "mpn:auth");
+      }
+    },
+
   "mpn-header": PageHeaderElement,
   "mpn-card": CardElement,
   "mpn-main-grid": MainGridElement,

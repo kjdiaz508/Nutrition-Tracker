@@ -47,3 +47,12 @@ export interface User {
   mealPlans: MealPlanPreview[];
   recipes: RecipePreview[];
 }
+
+export interface UserUpdate {
+  firstName?: string;
+  lastName?: string;
+  username?: string;
+  currentMealPlan?: string;
+  mealPlans?: string[];
+  recipes?: string[]
+}

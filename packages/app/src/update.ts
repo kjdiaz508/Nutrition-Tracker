@@ -1,0 +1,70 @@
+import { Auth, Update } from "@calpoly/mustang";
+import { Msg } from "./messages";
+import { Model } from "./model";
+import { User, UserUpdate } from "./types";
+
+export default function update(
+  message: Msg,
+  apply: Update.ApplyMap<Model>,
+  user: Auth.User
+) {
+  switch (message[0]) {
+    case "profile/get":
+      loadProfile(message[1], user).then((profile) =>
+        apply((model) => ({ ...model, profile }))
+      );
+      break;
+    case "profile/save":
+      saveProfile(message[1], user).then((profile) =>
+        apply((model) => ({ ...model, profile }))
+      );
+      break;
+    default:
+      throw new Error(`Unhandled Auth message "${message[0]}"`);
+  }
+}
+
+function loadProfile(
+  payload: { username: string },
+  user: Auth.User
+) {
+  console.log((user as Auth.AuthenticatedUser).username);
+  return fetch(`/api/users/${(user as Auth.AuthenticatedUser).username}`, {
+    headers: Auth.headers(user)
+  })
+  .then((res: Response) => {
+    if (res.status === 200) {
+      return res.json();
+    }
+    return undefined;
+  })
+  .then((json: unknown) => {
+    if (json) {
+      console.log("Profile:", json);
+      return json as User;
+    }
+  })
+}
+
+function saveProfile(
+  payload: { profile: UserUpdate },
+  user: Auth.User
+) {
+  return fetch(`/api/users/${(user as Auth.AuthenticatedUser).username}`, {
+        method: "PUT",
+        headers: Auth.headers(user),
+        body: JSON.stringify(payload.profile),
+      })
+  .then((res: Response) => {
+    if (res.status === 200) {
+      return res.json();
+    }
+    return undefined;
+  })
+  .then((json: unknown) => {
+    if (json) {
+      console.log("Profile:", json);
+      return json as User;
+    }
+  })
+}

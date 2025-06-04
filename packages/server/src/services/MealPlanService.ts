@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
-import { Day, MealPlan } from "models/MealPlan";
+import { Day, MealPlan } from "models";
 
 const DaySchema = new Schema<Day>(
   {
