@@ -83,6 +83,7 @@ export function authenticateUser(
   if (!token) {
     res.status(401).end();
   } else {
+    console.log("bloop:", req.body);
     jwt.verify(token, TOKEN_SECRET, (error, decoded) => {
       if (decoded){
         req.user = decoded;

@@ -15,56 +15,58 @@ export default function update(
       );
       break;
     case "profile/save":
-      saveProfile(message[1], user).then((profile) =>
-        apply((model) => ({ ...model, profile }))
-      );
+      saveProfile(message[1], user)
+        .then((profile) => {
+          apply((model) => ({ ...model, profile }));
+          message[1].onSuccess?.();
+        })
+        .catch((err) => {
+          message[1].onFailure?.(err);
+        });
       break;
     default:
       throw new Error(`Unhandled Auth message "${message[0]}"`);
   }
 }
 
-function loadProfile(
-  payload: { username: string },
-  user: Auth.User
-) {
+function loadProfile(payload: { username: string }, user: Auth.User) {
   console.log((user as Auth.AuthenticatedUser).username);
   return fetch(`/api/users/${(user as Auth.AuthenticatedUser).username}`, {
-    headers: Auth.headers(user)
+    headers: Auth.headers(user),
   })
-  .then((res: Response) => {
-    if (res.status === 200) {
-      return res.json();
-    }
-    return undefined;
-  })
-  .then((json: unknown) => {
-    if (json) {
-      console.log("Profile:", json);
-      return json as User;
-    }
-  })
+    .then((res: Response) => {
+      if (res.status === 200) {
+        return res.json();
+      }
+      return undefined;
+    })
+    .then((json: unknown) => {
+      if (json) {
+        console.log("Profile:", json);
+        return json as User;
+      }
+    });
 }
 
-function saveProfile(
-  payload: { profile: UserUpdate },
-  user: Auth.User
-) {
+function saveProfile(payload: { profile: UserUpdate }, user: Auth.User) {
   return fetch(`/api/users/${(user as Auth.AuthenticatedUser).username}`, {
-        method: "PUT",
-        headers: Auth.headers(user),
-        body: JSON.stringify(payload.profile),
-      })
-  .then((res: Response) => {
-    if (res.status === 200) {
-      return res.json();
-    }
-    return undefined;
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      ...Auth.headers(user),
+    },
+    body: JSON.stringify(payload.profile),
   })
-  .then((json: unknown) => {
-    if (json) {
-      console.log("Profile:", json);
-      return json as User;
-    }
-  })
+    .then((res: Response) => {
+      if (res.status === 200) {
+        return res.json();
+      }
+      return undefined;
+    })
+    .then((json: unknown) => {
+      if (json) {
+        console.log("Profile:", json);
+        return json as User;
+      }
+    });
 }

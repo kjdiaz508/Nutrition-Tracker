@@ -1,7 +1,7 @@
 import { css, html } from "lit";
 import { state } from "lit/decorators.js";
 import reset from "../styles/reset.css";
-import { Events, View } from "@calpoly/mustang";
+import { Events, View, Form, define } from "@calpoly/mustang";
 import { User } from "../types";
 import { Msg } from "../messages";
 import { Model } from "../model";
@@ -12,6 +12,13 @@ export class ProfileView extends View<Model, Msg> {
   get user(): User | undefined {
     return this.model.profile;
   }
+
+  static uses = define({
+    "mu-form": Form.Element,
+  });
+
+  @state()
+  private editing: boolean = false;
 
   constructor() {
     super("mpn:model");
@@ -70,6 +77,10 @@ export class ProfileView extends View<Model, Msg> {
         justify-content: center;
         margin-top: var(--space-md);
       }
+      mu-form {
+        display: flex;
+        gap: 1rem;
+      }
     `,
   ];
 
@@ -86,7 +97,7 @@ export class ProfileView extends View<Model, Msg> {
     if (!confirmed) return;
 
     const updated: UserUpdate = {
-      currentMealPlan: mealPlanId
+      currentMealPlan: mealPlanId,
     };
 
     this.dispatchMessage(["profile/save", { profile: updated }]);
@@ -113,65 +124,94 @@ export class ProfileView extends View<Model, Msg> {
     `;
   }
 
-  render() {
-    return html`
-      <mpn-header title="My Profile"></mpn-header>
-      <mpn-main-grid>
-        <mpn-card class="col-span-12">
-          <h2>Profile Info</h2>
-          ${this.user
-            ? html`
-                <div class="info-block">
-                  <p>
-                    <span class="label">First Name:</span>
-                    ${this.user.firstName}
-                  </p>
-                  <p>
-                    <span class="label">Last Name:</span>
-                    ${this.user.lastName}
-                  </p>
-                  <p>
-                    <span class="label">Username:</span>
-                    ${this.user.username}
-                  </p>
-                </div>
-
-                <div class="info-block">
-                  <h3>Current Meal Plan</h3>
-                  ${this.user.currentMealPlan
-                    ? html`
-                        <p>
-                          <a
-                            href="/app/my-plans/${this.user.currentMealPlan
-                              ._id}"
-                          >
-                            ${this.user.currentMealPlan.name}
-                          </a>
-                        </p>
-                      `
-                    : html`<p>No meal plan selected.</p>`}
-                </div>
-
-                <div class="info-block">
-                  <h3>Your Meal Plans</h3>
-                  ${this.renderMealPlans()}
-                </div>
-              `
-            : html`<p>Loading user info...</p>`}
-        </mpn-card>
-
-        <mpn-card class="col-span-12 signout-container">
-          <button
-            @click=${(e: Event) =>
-              Events.relay(e, "auth:message", ["auth/signout"])}
-          >
-            <svg class="icon">
-              <use href="/icons/nutrition.svg#icon-profile" />
-            </svg>
-            Sign Out
-          </button>
-        </mpn-card>
-      </mpn-main-grid>
-    `;
+  handleSubmit(event: Form.SubmitEvent<UserUpdate>) {
+    this.dispatchMessage([
+      "profile/save",
+      {
+        profile: event.detail,
+        onSuccess: () => {
+          this.editing = false;
+        },
+        onFailure: (err: Error) => {
+          console.error("Save failed:", err);
+        },
+      },
+    ]);
   }
+
+render() {
+  return html`
+    <mpn-header title="My Profile"></mpn-header>
+    <mpn-main-grid>
+      <mpn-card class="col-span-12">
+        <h2>Profile Info</h2>
+        ${this.user
+          ? html`
+              <div class="info-block">
+                <p><span class="label">First Name:</span> ${this.user.firstName}</p>
+                <p><span class="label">Last Name:</span> ${this.user.lastName}</p>
+                <p><span class="label">Username:</span> ${this.user.username}</p>
+              </div>
+
+              <button @click=${() => (this.editing = !this.editing)}>
+                ${this.editing ? "Cancel" : "Edit Name"}
+              </button>
+
+              ${this.editing
+                ? html`
+                    <mu-form
+                      .init=${{
+                        firstName: this.user.firstName,
+                        lastName: this.user.lastName
+                      }}
+                      @mu-form:submit=${this.handleSubmit}
+                    >
+                      <label>
+                        First Name:
+                        <input name="firstName" required />
+                      </label>
+                      <label>
+                        Last Name:
+                        <input name="lastName" required />
+                      </label>
+                    </mu-form>
+                  `
+                : ""}
+
+              <div class="info-block">
+                <h3>Current Meal Plan</h3>
+                ${this.user.currentMealPlan
+                  ? html`
+                      <p>
+                        <a href="/app/my-plans/${this.user.currentMealPlan._id}">
+                          ${this.user.currentMealPlan.name}
+                        </a>
+                      </p>
+                    `
+                  : html`<p>No meal plan selected.</p>`}
+              </div>
+
+              <div class="info-block">
+                <h3>Your Meal Plans</h3>
+                ${this.renderMealPlans()}
+              </div>
+            `
+          : html`<p>Loading user info...</p>`}
+      </mpn-card>
+
+      <mpn-card class="col-span-12 signout-container">
+        <button
+          @click=${(e: Event) =>
+            Events.relay(e, "auth:message", ["auth/signout"])}
+        >
+          <svg class="icon">
+            <use href="/icons/nutrition.svg#icon-profile" />
+          </svg>
+          Sign Out
+        </button>
+      </mpn-card>
+    </mpn-main-grid>
+  `;
+}
+
 }

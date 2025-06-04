@@ -94,6 +94,7 @@ function authenticateUser(req, res, next) {
   if (!token) {
     res.status(401).end();
   } else {
+    console.log("bloop:", req.body);
     import_jsonwebtoken.default.verify(token, TOKEN_SECRET, (error, decoded) => {
       if (decoded) {
         req.user = decoded;
