@@ -50,11 +50,12 @@ function create(json: User): Promise<HydratedDocument<User>> {
 }
 
 function update(username: string, json: User): Promise<User> {
-  return UserModel.findOneAndUpdate({ username }, json, { new: true })
+  return UserModel.findOneAndUpdate({ username }, json, { new: true})
     .populate("mealPlans", "_id name")
     .populate("recipes", "_id name")
     .populate("currentMealPlan")
     .then((updated) => {
+      console.log(updated);
       if (!updated) throw `${username} not updated`;
       return updated;
     });
