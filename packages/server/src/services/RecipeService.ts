@@ -1,4 +1,4 @@
-import { Ingredient, Recipe } from "models/Recipe";
+import { Ingredient, Recipe } from "models";
 import mongoose, { Schema, model } from "mongoose";
 
 const IngredientSchema = new Schema<Ingredient>({

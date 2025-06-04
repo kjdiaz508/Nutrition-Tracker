@@ -1,4 +1,4 @@
-import { User } from "models/User";
+import { User } from "models";
 import mongoose, { HydratedDocument, model, Schema } from "mongoose";
 
 const UserSchema = new Schema<User>(
@@ -18,7 +18,8 @@ const UserModel = model<User>("User", UserSchema);
 function index(): Promise<User[]> {
   return UserModel.find()
     .populate("mealPlans", "_id name")
-    .populate("recipes", "_id name");
+    .populate("recipes", "_id name")
+    .populate("currentMealPlan");
 }
 
 function get(id: string): Promise<HydratedDocument<User>> {
@@ -40,7 +41,7 @@ function getByUsername(username: string): Promise<HydratedDocument<User>> {
     .then((user) => {
       if (!user) throw `${username} not found`;
       return user;
-    })
+    });
 }
 
 function create(json: User): Promise<HydratedDocument<User>> {
@@ -48,13 +49,15 @@ function create(json: User): Promise<HydratedDocument<User>> {
   return newUser.save();
 }
 
-function update(id: string, json: User): Promise<User> {
-  return UserModel.findByIdAndUpdate(id, json, { new: true }).then(
-    (updated) => {
-      if (!updated) throw `${id} not updated`;
+function update(username: string, json: User): Promise<User> {
+  return UserModel.findOneAndUpdate({ username }, json, { new: true })
+    .populate("mealPlans", "_id name")
+    .populate("recipes", "_id name")
+    .populate("currentMealPlan")
+    .then((updated) => {
+      if (!updated) throw `${username} not updated`;
       return updated;
-    }
-  );
+    });
 }
 
 function remove(id: string): Promise<void> {

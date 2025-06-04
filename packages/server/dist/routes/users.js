@@ -37,22 +37,18 @@ const router = import_express.default.Router();
 router.get("/", (_, res) => {
   import_UserService.default.index().then((list) => res.json(list)).catch((err) => res.status(500).send(err));
 });
-router.get("/:id", (req, res) => {
-  const { id } = req.params;
-  import_UserService.default.get(id).then((user) => res.json(user)).catch((err) => res.status(404).send(err));
-});
-router.get("/username/:username", (req, res) => {
+router.get("/:username", (req, res) => {
   const { username } = req.params;
-  import_UserService.default.getByUsername(username).then((user) => res.json(user)).catch((err) => res.status(404).send({ error: err }));
+  import_UserService.default.getByUsername(username).then((user) => res.json(user)).catch((err) => res.status(404).send(err));
 });
 router.post("/", (req, res) => {
   const newUser = req.body;
   import_UserService.default.create(newUser).then((created) => res.status(201).json(created)).catch((err) => res.status(500).send(err));
 });
-router.put("/:id", (req, res) => {
-  const { id } = req.params;
+router.put("/:username", (req, res) => {
+  const { username } = req.params;
   const updateData = req.body;
-  import_UserService.default.update(id, updateData).then((updated) => res.json(updated)).catch((err) => res.status(404).send(err));
+  import_UserService.default.update(username, updateData).then((updated) => res.json(updated)).catch((err) => res.status(404).send(err));
 });
 router.delete("/:id", (req, res) => {
   const { id } = req.params;

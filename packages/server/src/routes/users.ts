@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { User } from "../models/User";
+import { User } from "../models";
 import Users from "../services/UserService";
 
 const router = express.Router();
@@ -10,21 +10,21 @@ router.get("/", (_, res: Response) => {
     .catch((err) => res.status(500).send(err));
 });
 
-router.get("/:id", (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  Users.get(id)
-    .then((user: User) => res.json(user))
-    .catch((err) => res.status(404).send(err));
-});
-
-router.get("/username/:username", (req: Request, res: Response) => {
+router.get("/:username", (req: Request, res: Response) => {
   const { username } = req.params;
 
   Users.getByUsername(username)
     .then((user: User) => res.json(user))
-    .catch((err) => res.status(404).send({ error: err }));
+    .catch((err) => res.status(404).send(err));
 });
+
+// router.get("/username/:username", (req: Request, res: Response) => {
+//   const { username } = req.params;
+
+//   Users.getByUsername(username)
+//     .then((user: User) => res.json(user))
+//     .catch((err) => res.status(404).send({ error: err }));
+// });
 
 router.post("/", (req: Request, res: Response) => {
   const newUser = req.body;
@@ -34,11 +34,11 @@ router.post("/", (req: Request, res: Response) => {
     .catch((err) => res.status(500).send(err));
 });
 
-router.put("/:id", (req: Request, res: Response) => {
-  const { id } = req.params;
+router.put("/:username", (req: Request, res: Response) => {
+  const { username } = req.params;
   const updateData = req.body;
 
-  Users.update(id, updateData)
+  Users.update(username, updateData)
     .then((updated: User) => res.json(updated))
     .catch((err) => res.status(404).send(err));
 });

@@ -45,7 +45,7 @@ const UserSchema = new import_mongoose.Schema(
 );
 const UserModel = (0, import_mongoose.model)("User", UserSchema);
 function index() {
-  return UserModel.find().populate("mealPlans", "_id name").populate("recipes", "_id name");
+  return UserModel.find().populate("mealPlans", "_id name").populate("recipes", "_id name").populate("currentMealPlan");
 }
 function get(id) {
   return UserModel.findById(id).populate("mealPlans", "_id name").populate("recipes", "_id name").populate("currentMealPlan").then((user) => {
@@ -63,13 +63,11 @@ function create(json) {
   const newUser = new UserModel(json);
   return newUser.save();
 }
-function update(id, json) {
-  return UserModel.findByIdAndUpdate(id, json, { new: true }).then(
-    (updated) => {
-      if (!updated) throw `${id} not updated`;
-      return updated;
-    }
-  );
+function update(username, json) {
+  return UserModel.findOneAndUpdate({ username }, json, { new: true }).populate("mealPlans", "_id name").populate("recipes", "_id name").populate("currentMealPlan").then((updated) => {
+    if (!updated) throw `${username} not updated`;
+    return updated;
+  });
 }
 function remove(id) {
   return UserModel.findByIdAndDelete(id).then((deleted) => {

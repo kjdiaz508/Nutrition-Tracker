@@ -18,9 +18,11 @@
     </div>
     <mu-history provides="mpn:history">
       <mu-auth provides="mpn:auth">
-        <div class="container">
-          <mu-switch></mu-switch>
-        </div>
+        <mu-store provides="mpn:model">
+          <div class="container">
+            <mu-switch></mu-switch>
+          </div>
+        </mu-store>
       </mu-auth>
     </mu-history>
   </body>
