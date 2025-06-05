@@ -22,6 +22,8 @@ import { MyRecipesView } from "./views/MyRecipesView";
 import { Msg } from "./messages";
 import { Model, init } from "./model";
 import update from "./update";
+import { CreatePlanView } from "./views/CreatePlanView";
+import { SignupFormElement } from "./components/SignupForm";
 
 const routes = [
   {
@@ -48,15 +50,23 @@ const routes = [
     path: "/app/my-plans",
     view: () => html`<my-plans-view></my-plans-view>`,
   },
+    {
+    path: "/app/my-plans/create",
+    view: () => html`<create-plan-view></create-plan-view>`,
+  },
+  {
+    path: "/app/my-recipes",
+    view: () => html`<my-recipes-view></my-recipes-view>`,
+  },
+  {
+    path: "/app/my-recipes/create",
+    view: () => html`<create-recipe-view></create-plan-view>`,
+  },
   {
     path: "/app/my-plans/:id",
     view: (params: Switch.Params) => html`
       <plan-view id=${params.id}></plan-view>
     `,
-  },
-  {
-    path: "/app/my-recipes",
-    view: () => html`<my-recipes-view></my-recipes-view>`,
   },
   {
     path: "/app/my-recipes/:id",
@@ -88,14 +98,6 @@ const routes = [
       <recipe-view id=${params.id}></recipe-view>
     `,
   },
-  {
-    path: "/app/my-plans/create",
-    view: () => html`<create-plan-view></create-plan-view>`,
-  },
-  {
-    path: "/app/my-recipes/create",
-    view: () => html`<create-recipe-view></create-plan-view>`,
-  },
 ];
 
 define({
@@ -117,6 +119,7 @@ define({
   "mpn-recipe-link": RecipeLinkElement,
   "login-form": LoginFormElement,
   "mpn-recipe-details": RecipeDetailsElement,
+  "signup-form": SignupFormElement,
 
   "home-view": HomeView,
   "login-view": LoginView,
@@ -128,6 +131,7 @@ define({
   "recipe-view": RecipeView,
   "my-plans-view": MyPlansView,
   "my-recipes-view": MyRecipesView,
+  "create-plan-view": CreatePlanView,
 
   "mu-switch": class AppSwitch extends Switch.Element {
     constructor() {

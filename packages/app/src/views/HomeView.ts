@@ -32,6 +32,33 @@ export class HomeView extends LitElement {
       a:hover {
         text-decoration: underline;
       }
+
+      .link-group {
+        margin-top: var(--space-md);
+        display: flex;
+        gap: var(--space-md);
+        flex-wrap: wrap;
+      }
+
+      .button-link {
+        display: inline-block;
+        background-color: var(--color-accent);
+        color: white;
+        padding: var(--space-sm) var(--space-md);
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+      }
+
+      .button-link:hover {
+        background-color: #c75c1d;
+      }
+
+      .mealplan-link {
+        font-weight: bold;
+        color: var(--color-accent);
+      }
     `
   ];
 
@@ -56,18 +83,19 @@ export class HomeView extends LitElement {
 
   async hydrate() {
     try {
-      const res = await fetch(`/api/users/username/${this._user!.username}`, {
+      const res = await fetch(`/api/users/${this._user!.username}`, {
         headers: this.authorization,
       });
       const data = await res.json();
       this.user = data;
       this.mealPlan = data.currentMealPlan;
-
+      console.log("mp:", this.mealPlan);
       const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
-      const day = this.mealPlan?.days.find(
+      const day = this.mealPlan!.days.find(
         (d) => d.weekday.toLowerCase() === today.toLowerCase()
       );
       this.todayRecipes = day?.recipes || [];
+      console.log(this.todayRecipes);
     } catch (err) {
       console.error("Error fetching current user or meal plan:", err);
     }
@@ -98,6 +126,10 @@ export class HomeView extends LitElement {
             Use this app to explore meal plans, view detailed nutrition info,
             and prep your week efficiently.
           </p>
+          <div class="link-group">
+            <a class="button-link" href="/app/my-plans/create">Create Meal Plan</a>
+            <a class="button-link" href="/app/my-plans">My Meal Plans</a>
+          </div>
         </mpn-card>
 
         ${this.mealPlan
@@ -105,7 +137,7 @@ export class HomeView extends LitElement {
               <mpn-card class="col-span-12">
                 <h3>Current Meal Plan:</h3>
                 <p>
-                  <a href="/app/my-plans/${this.mealPlan._id}">
+                  <a class="mealplan-link" href="/app/my-plans/${this.mealPlan._id}">
                     ${this.mealPlan.name}
                   </a>
                 </p>

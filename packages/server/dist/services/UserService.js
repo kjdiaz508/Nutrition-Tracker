@@ -49,12 +49,32 @@ function index() {
 }
 function get(id) {
   return UserModel.findById(id).populate("mealPlans", "_id name").populate("recipes", "_id name").populate("currentMealPlan").then((user) => {
+    console.log(user);
     if (!user) throw `${id} not found`;
     return user;
   });
 }
+function appendMealPlan(username, planId) {
+  return UserModel.findOneAndUpdate(
+    { username },
+    { $addToSet: { mealPlans: planId } },
+    // ensures no duplicates
+    { new: true }
+  ).then((plan) => {
+    if (!plan) throw `${plan} not added`;
+    return plan;
+  });
+}
 function getByUsername(username) {
-  return UserModel.findOne({ username }).populate("mealPlans", "_id name").populate("recipes", "_id name").populate("currentMealPlan").then((user) => {
+  return UserModel.findOne({ username }).populate("mealPlans", "_id name").populate("recipes", "_id name").populate("currentMealPlan").populate({
+    path: "currentMealPlan",
+    populate: {
+      path: "days.recipes",
+      model: "Recipe"
+      // only necessary if not inferred
+    }
+  }).then((user) => {
+    console.log(user);
     if (!user) throw `${username} not found`;
     return user;
   });
@@ -64,7 +84,14 @@ function create(json) {
   return newUser.save();
 }
 function update(username, json) {
-  return UserModel.findOneAndUpdate({ username }, json, { new: true }).populate("mealPlans", "_id name").populate("recipes", "_id name").populate("currentMealPlan").then((updated) => {
+  return UserModel.findOneAndUpdate({ username }, json, { new: true }).populate("mealPlans", "_id name").populate("recipes", "_id name").populate("currentMealPlan").populate({
+    path: "currentMealPlan",
+    populate: {
+      path: "days.recipes",
+      model: "Recipe"
+      // only necessary if not inferred
+    }
+  }).then((updated) => {
     console.log(updated);
     if (!updated) throw `${username} not updated`;
     return updated;
@@ -75,4 +102,12 @@ function remove(id) {
     if (!deleted) throw `${id} not deleted`;
   });
 }
-var UserService_default = { index, get, getByUsername, create, update, remove };
+var UserService_default = {
+  index,
+  get,
+  getByUsername,
+  create,
+  update,
+  remove,
+  appendMealPlan
+};

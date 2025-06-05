@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema, model, HydratedDocument } from "mongoose";
 import { Day, MealPlan } from "models";
 
 const DaySchema = new Schema<Day>(
@@ -36,7 +36,7 @@ function index(): Promise<MealPlan[]> {
     });
 }
 
-function get(id: string): Promise<MealPlan> {
+function get(id: string): Promise<HydratedDocument<MealPlan>> {
   return MealPlanModel.findById(id)
     .populate("days.recipes")
     .then((mp) => {
@@ -45,12 +45,12 @@ function get(id: string): Promise<MealPlan> {
     });
 }
 
-function create(json: MealPlan): Promise<MealPlan> {
+function create(json: MealPlan): Promise<HydratedDocument<MealPlan>> {
   const newMP = new MealPlanModel(json);
   return newMP.save();
 }
 
-async function update(id: string, json: MealPlan, username: string): Promise<MealPlan> {
+async function update(id: string, json: MealPlan, username: string): Promise<HydratedDocument<MealPlan>> {
   const plan = await MealPlanModel.findById(id);
   if (!plan) throw `${id} not found`;
   if (plan.owner !== username) throw `Unauthorized`;
@@ -79,7 +79,7 @@ function getByUsername(username: string): Promise<MealPlan[]> {
     .then((plans) => plans.filter((p) => p.owner === username));
 }
 
-function getAccessibleByUsername(username: string): Promise<MealPlan[]> {
+function getAccessibleByUsername(username: string): Promise<HydratedDocument<MealPlan>[]> {
   return MealPlanModel.find()
     .populate("days.recipes")
     .then((plans) =>
@@ -89,7 +89,7 @@ function getAccessibleByUsername(username: string): Promise<MealPlan[]> {
     );
 }
 
-function getIfAuthorized(id: string, username: string): Promise<MealPlan> {
+function getIfAuthorized(id: string, username: string): Promise<HydratedDocument<MealPlan>> {
   return MealPlanModel.findById(id)
     .populate("days.recipes")
     .then((plan) => {

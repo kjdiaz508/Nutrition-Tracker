@@ -56,3 +56,15 @@ export interface UserUpdate {
   mealPlans?: string[];
   recipes?: string[]
 }
+
+export interface SubmitMealDay {
+  weekday: string;
+  recipes: string[]; // ObjectId strings
+}
+
+export interface SubmitMealPlan {
+  name: string;
+  public: boolean;
+  days: SubmitMealDay[];
+}
+

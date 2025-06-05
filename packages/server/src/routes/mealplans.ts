@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { authenticateUser } from "./auth";
 import MealPlans from "../services/MealPlanService";
+import Users from "../services/UserService"; // make sure this is imported
 
 const router = express.Router();
 
@@ -38,14 +39,22 @@ router.get("/:id", authenticateUser, (req: any, res) => {
 });
 
 // POST /api/mealplans
+// POST /api/mealplans
 router.post("/", authenticateUser, (req: any, res) => {
   const newPlan = req.body;
   if (!req.user?.username) res.status(401).send("Unauthorized");
-  newPlan.owner = req.user?.username;
+
+  newPlan.owner = req.user.username;
+
   MealPlans.create(newPlan)
-    .then((created) => res.status(201).json(created))
+    .then((created) => {
+      return Users.appendMealPlan(req.user.username, created._id).then(() =>
+        res.status(201).json(created)
+      );
+    })
     .catch((err) => res.status(500).send(err));
 });
+;
 
 // PUT /api/mealplans/:id
 router.put("/:id", authenticateUser, (req: any, res) => {
