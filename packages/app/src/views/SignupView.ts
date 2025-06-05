@@ -22,7 +22,7 @@ export class SignupView extends LitElement {
         <mpn-card class="col-span-12 center-content">
           <div class="sequence">
             <h2>Sign Up</h2>
-            <login-form api="/auth/register" redirect="/">
+            <signup-form api="/auth/register" redirect="/">
               <label>
                 <span>Username:</span>
                 <input name="username" autocomplete="off" />
@@ -31,7 +31,7 @@ export class SignupView extends LitElement {
                 <span>Password:</span>
                 <input type="password" name="password" />
               </label>
-            </login-form>
+            </signup-form>
           </div>
         </mpn-card>
         <div class="col-span-12">

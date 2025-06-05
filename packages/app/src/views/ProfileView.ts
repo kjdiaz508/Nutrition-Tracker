@@ -116,7 +116,7 @@ export class ProfileView extends View<Model, Msg> {
               <span>${plan.name}</span>
               ${this.user?.currentMealPlan?._id === plan._id
                 ? html`<em>(Current)</em>`
-                : html` <button @click=${() => null}>Set as Current</button> `}
+                : html` <button @click=${() => this.setAsCurrent(plan._id)}>Set as Current</button> `}
             </li>
           `
         )}
@@ -202,7 +202,7 @@ render() {
       <mpn-card class="col-span-12 signout-container">
         <button
           @click=${(e: Event) =>
-            Events.relay(e, "auth:message", ["auth/signout"])}
+            Events.relay(e, "auth:message", ["auth/signout", { redirect: "/" }])}
         >
           <svg class="icon">
             <use href="/icons/nutrition.svg#icon-profile" />

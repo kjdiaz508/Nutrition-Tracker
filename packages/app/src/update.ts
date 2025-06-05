@@ -1,7 +1,7 @@
 import { Auth, Update } from "@calpoly/mustang";
 import { Msg } from "./messages";
 import { Model } from "./model";
-import { User, UserUpdate } from "./types";
+import { SubmitMealPlan, User, UserUpdate } from "./types";
 
 export default function update(
   message: Msg,
@@ -19,6 +19,15 @@ export default function update(
         .then((profile) => {
           apply((model) => ({ ...model, profile }));
           message[1].onSuccess?.();
+        })
+        .catch((err) => {
+          message[1].onFailure?.(err);
+        });
+      break;
+    case "mealplan/create":
+      createMealPlan(message[1], user)
+        .then((created) => {
+          message[1].onSuccess?.(created._id);
         })
         .catch((err) => {
           message[1].onFailure?.(err);
@@ -69,4 +78,21 @@ function saveProfile(payload: { profile: UserUpdate }, user: Auth.User) {
         return json as User;
       }
     });
+}
+
+function createMealPlan(
+  payload: { mealplan: SubmitMealPlan },
+  user: Auth.User
+) {
+  return fetch("/api/mealplans", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...Auth.headers(user)
+    },
+    body: JSON.stringify(payload.mealplan)
+  }).then((res) => {
+    if (res.status === 201) return res.json();
+    throw new Error("Failed to create meal plan");
+  });
 }
