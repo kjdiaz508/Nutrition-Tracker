@@ -10,7 +10,7 @@ export default function update(
 ) {
   switch (message[0]) {
     case "profile/get":
-      loadProfile(message[1], user).then((profile) =>
+      loadProfile(user).then((profile) =>
         apply((model) => ({ ...model, profile }))
       );
       break;
@@ -38,7 +38,7 @@ export default function update(
   }
 }
 
-function loadProfile(payload: { username: string }, user: Auth.User) {
+function loadProfile(user: Auth.User) {
   console.log((user as Auth.AuthenticatedUser).username);
   return fetch(`/api/users/${(user as Auth.AuthenticatedUser).username}`, {
     headers: Auth.headers(user),

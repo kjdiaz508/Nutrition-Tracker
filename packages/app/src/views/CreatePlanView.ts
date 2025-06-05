@@ -94,7 +94,7 @@ export class CreatePlanView extends View<Model, Msg> {
     );
   }
 
-  handleSubmit(event: Form.SubmitEvent<any>) {
+  handleSubmit() {
     const submitDays = this.days.map((day) => ({
       weekday: day.weekday,
       recipes: day.recipes.map((r) => (typeof r === "string" ? r : r._id)),

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
     <link rel="stylesheet" href="/styles/background.css" />
-    <script type="module" crossorigin src="/assets/index-BilMbXiR.js"></script>
+    <script type="module" crossorigin src="/assets/index-2KeBOlJc.js"></script>
   </head>
   <body>
     <div>
@@ -18,9 +18,11 @@
     </div>
     <mu-history provides="mpn:history">
       <mu-auth provides="mpn:auth">
-        <div class="container">
-          <mu-switch></mu-switch>
-        </div>
+        <mu-store provides="mpn:model">
+          <div class="container">
+            <mu-switch></mu-switch>
+          </div>
+        </mu-store>
       </mu-auth>
     </mu-history>
   </body>
